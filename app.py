@@ -39,12 +39,25 @@ LEGACY_DB = os.path.join(
     BASE_DIR,
     "database.db"
 )
+if os.environ.get("VERCEL") == "1":
+    DATABASE = "/tmp/emergency.db"
 
-if os.path.exists(EMERGENCY_DB):
-    DATABASE = EMERGENCY_DB
+    if not os.path.exists(DATABASE):
+        source_db = (
+            EMERGENCY_DB
+            if os.path.exists(EMERGENCY_DB)
+            else LEGACY_DB
+        )
+
+        if os.path.exists(source_db):
+            import shutil
+            shutil.copy2(source_db, DATABASE)
+
 else:
-    DATABASE = LEGACY_DB
-
+    if os.path.exists(EMERGENCY_DB):
+        DATABASE = EMERGENCY_DB
+    else:
+        DATABASE = LEGACY_DB
 
 # ============================================================
 # UPLOAD / REPORT FOLDERS
