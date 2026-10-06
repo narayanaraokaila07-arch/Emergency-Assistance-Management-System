@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Responder Dashboard</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #172033;
+}
+
+nav {
+    background: #0f172a;
+    color: white;
+    padding: 16px 7%;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 18px;
+}
+
+.container {
+    max-width: 1150px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.profile {
+    background: white;
+    padding: 22px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+}
+
+.emergency {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+    border-left: 6px solid #dc2626;
+    box-shadow: 0 8px 25px rgba(0,0,0,.07);
+}
+
+.emergency.active {
+    background: #fff7ed;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 13px;
+}
+
+.info {
+    background: #f8fafc;
+    padding: 13px;
+    border-radius: 10px;
+}
+
+.label {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.value {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.status {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+}
+
+textarea {
+    min-height: 80px;
+}
+
+button,
+.btn {
+    border: none;
+    display: inline-block;
+    padding: 12px 17px;
+    margin-top: 12px;
+    border-radius: 9px;
+    color: white;
+    background: #2563eb;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.accept {
+    background: #16a34a;
+}
+
+.map {
+    background: #7c3aed;
+}
+
+.location {
+    background: #eff6ff;
+    border: 1px solid #93c5fd;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 15px 0;
+}
+
+@media(max-width:750px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<strong>🚑 Responder Dashboard</strong>
+
+<div>
+
+<a href="{{ url_for('home') }}">Home</a>
+
+<a href="{{ url_for('logout') }}">Logout</a>
+
+</div>
+
+</nav>
+
+
+<div class="container">
+
+
+<div class="profile">
+
+<h1>
+👨‍🚒 {{ responder.name }}
+</h1>
+
+<p>
+<strong>Department:</strong>
+{{ responder.department }}
+</p>
+
+<p>
+<strong>Phone:</strong>
+{{ responder.phone }}
+</p>
+
+<p>
+<strong>Status:</strong>
+<span class="status">
+{{ responder.status }}
+</span>
+</p>
+
+<div class="location">
+
+<strong>📍 Live Location</strong>
+
+<p id="locationStatus">
+Starting location sharing...
+</p>
+
+</div>
+
+</div>
+
+
+<h2>🚨 Assigned Emergencies</h2>
+
+
+{% if emergencies %}
+
+{% for emergency in emergencies %}
+
+<div class="emergency
+{% if emergency.status in ['Assigned','Accepted','On the Way'] %}
+active
+{% endif %}
+">
+
+<h2>
+🚨 Emergency #{{ emergency.id }}
+</h2>
+
+<p>
+<span class="status">
+{{ emergency.status }}
+</span>
+</p>
+
+
+<div class="grid">
+
+
+<div class="info">
+
+<div class="label">
+Emergency Type
+</div>
+
+<div class="value">
+{{ emergency.emergency_type }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Severity
+</div>
+
+<div class="value">
+{{ emergency.severity }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Reporter Name
+</div>
+
+<div class="value">
+{{ emergency.name }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Reporter Phone
+</div>
+
+<div class="value">
+{{ emergency.phone }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Location
+</div>
+
+<div class="value">
+{{ emergency.address or emergency.location }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Reported At
+</div>
+
+<div class="value">
+{{ emergency.created_at }}
+</div>
+
+</div>
+
+</div>
+
+
+<p>
+
+<strong>Description:</strong>
+
+<br>
+
+{{ emergency.description or "No description." }}
+
+</p>
+
+
+{% if emergency.latitude and emergency.longitude %}
+
+<a class="btn map"
+   target="_blank"
+   href="https://www.google.com/maps/dir/?api=1&destination={{ emergency.latitude }},{{ emergency.longitude }}">
+📍 Navigate to Emergency
+</a>
+
+{% endif %}
+
+
+{% if emergency.phone %}
+
+<a class="btn accept"
+   href="tel:{{ emergency.phone }}">
+📞 Call Reporter
+</a>
+
+{% endif %}
+
+
+<form method="POST"
+      action="{{ url_for('responder_status', emergency_id=emergency.id) }}">
+
+<label>
+Update Emergency Status
+</label>
+
+<select name="status">
+
+<option value="Accepted"
+{% if emergency.status == "Accepted" %}selected{% endif %}>
+Accepted
+</option>
+
+<option value="On the Way"
+{% if emergency.status == "On the Way" %}selected{% endif %}>
+On the Way
+</option>
+
+<option value="Reached"
+{% if emergency.status == "Reached" %}selected{% endif %}>
+Reached
+</option>
+
+<option value="Completed"
+{% if emergency.status == "Completed" %}selected{% endif %}>
+Completed
+</option>
+
+</select>
+
+
+<textarea name="note"
+placeholder="Optional note..."></textarea>
+
+
+<button type="submit">
+Update Status
+</button>
+
+</form>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="profile">
+
+<h2>✅ No emergencies assigned</h2>
+
+<p>
+You are currently available for new emergency assignments.
+</p>
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+<script>
+
+function updateResponderLocation() {
+
+    const status =
+        document.getElementById("locationStatus");
+
+    if (!navigator.geolocation) {
+
+        status.innerText =
+            "GPS is not supported.";
+
+        return;
+    }
+
+    navigator.geolocation.watchPosition(
+
+        function(position) {
+
+            const formData = new FormData();
+
+            formData.append(
+                "latitude",
+                position.coords.latitude
+            );
+
+            formData.append(
+                "longitude",
+                position.coords.longitude
+            );
+
+            fetch("/api/responder/location", {
+                method: "POST",
+                body: formData
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+
+                if (data.success) {
+
+                    status.innerText =
+                        "🟢 Location sharing active";
+
+                } else {
+
+                    status.innerText =
+                        "Unable to update location.";
+
+                }
+
+            })
+            .catch(function() {
+
+                status.innerText =
+                    "Location update failed.";
+
+            });
+
+        },
+
+        function() {
+
+            status.innerText =
+                "Please allow GPS permission.";
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            maximumAge: 5000,
+            timeout: 10000
+        }
+
+    );
+}
+
+updateResponderLocation();
+
+</script>
+
+</body>
+</html>

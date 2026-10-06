@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Responder Login</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🚨 Emergency Assistance
+    </div>
+
+    <div>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('login') }}">Admin Login</a>
+    </div>
+
+</nav>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% for category, message in messages %}
+
+        <div class="flash {{ category }}">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+{% endwith %}
+
+
+<div class="login-page">
+
+    <div class="login-box">
+
+        <div class="login-icon">
+            🚑
+        </div>
+
+        <h1>Responder Login</h1>
+
+        <p class="subtitle">
+            Sign in to view and manage your assigned emergencies.
+        </p>
+
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label>
+                    Responder Username
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-success btn-large">
+
+                🚑 Login as Responder
+
+            </button>
+
+        </form>
+
+
+        <div style="margin-top:20px;text-align:center;">
+
+            <a href="{{ url_for('home') }}"
+               style="color:#2563eb;text-decoration:none;">
+
+                ← Back to Home
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

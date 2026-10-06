@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#312e81">
+
+    <title>Report Emergency | Emergency Assistance</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(124,58,237,.13),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(236,72,153,.11),
+                    transparent 28%
+                ),
+                #f7f8fc;
+
+            color: #172033;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    #111827,
+                    #1e1b4b,
+                    #312e81
+                );
+
+            box-shadow:
+                0 8px 30px rgba(15,23,42,.20);
+        }
+
+
+        .nav-inner {
+            max-width: 1250px;
+
+            min-height: 70px;
+
+            margin: auto;
+
+            padding:
+                0 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        .brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 19px;
+
+            font-weight: 900;
+        }
+
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef4444,
+                    #ec4899
+                );
+
+            font-size: 20px;
+        }
+
+
+        .nav-links {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+        }
+
+
+        .nav-links a {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 750;
+
+            padding: 10px 14px;
+
+            border-radius: 10px;
+
+            transition: .2s;
+        }
+
+
+        .nav-links a:hover {
+            background:
+                rgba(255,255,255,.12);
+        }
+
+
+        .nav-home {
+            background:
+                rgba(255,255,255,.10);
+        }
+
+
+        .mobile-menu {
+            display: none;
+
+            width: 42px;
+            height: 42px;
+
+            border: 1px solid
+                rgba(255,255,255,.15);
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,.08);
+
+            color: white;
+
+            font-size: 21px;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .page {
+            max-width: 1150px;
+
+            margin: auto;
+
+            padding:
+                45px 22px 70px;
+        }
+
+
+        .header {
+            text-align: center;
+
+            max-width: 760px;
+
+            margin:
+                0 auto 30px;
+        }
+
+
+        .header-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                7px 13px;
+
+            border-radius: 999px;
+
+            background:
+                #f3e8ff;
+
+            color:
+                #6d28d9;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            text-transform: uppercase;
+
+            letter-spacing: .8px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .header h1 {
+            font-size:
+                clamp(32px,5vw,48px);
+
+            letter-spacing:
+                -1.7px;
+
+            color:
+                #111827;
+
+            margin-bottom: 10px;
+        }
+
+
+        .gradient-text {
+            background:
+                linear-gradient(
+                    90deg,
+                    #7c3aed,
+                    #db2777,
+                    #ef4444
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+        }
+
+
+        .header p {
+            color:
+                #64748b;
+
+            font-size: 15px;
+
+            line-height: 1.65;
+        }
+
+
+        /* =====================================================
+           FORM CARD
+        ===================================================== */
+
+        .form-card {
+            background:
+                rgba(255,255,255,.95);
+
+            border:
+                1px solid #e5e7eb;
+
+            border-radius: 25px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 20px 55px rgba(15,23,42,.09);
+        }
+
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+        }
+
+
+        .full {
+            grid-column:
+                1 / -1;
+        }
+
+
+        /* =====================================================
+           FORM GROUP
+        ===================================================== */
+
+        .form-group {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        .form-group label {
+            color:
+                #334155;
+
+            font-size: 13px;
+
+            font-weight: 850;
+        }
+
+
+        .required {
+            color:
+                #ef4444;
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+
+            border:
+                1px solid #dbe2ea;
+
+            border-radius: 13px;
+
+            background:
+                #f8fafc;
+
+            color:
+                #172033;
+
+            padding:
+                13px 14px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border .2s,
+                box-shadow .2s,
+                background .2s;
+        }
+
+
+        .form-group textarea {
+            min-height: 125px;
+
+            resize: vertical;
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            background: white;
+
+            border-color:
+                #8b5cf6;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(139,92,246,.11);
+        }
+
+
+        .hint {
+            color:
+                #94a3b8;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           EMERGENCY TYPE
+        ===================================================== */
+
+        .type-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 10px;
+
+            margin-top: 2px;
+        }
+
+
+        .type-option {
+            position: relative;
+
+            cursor: pointer;
+        }
+
+
+        .type-option input {
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        .type-box {
+            padding:
+                14px 10px;
+
+            text-align: center;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            background:
+                #f8fafc;
+
+            transition: .2s;
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+
+        .type-box .emoji {
+            display: block;
+
+            font-size: 24px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .type-option input:checked +
+        .type-box {
+            border-color:
+                #8b5cf6;
+
+            background:
+                #f3e8ff;
+
+            color:
+                #6d28d9;
+
+            box-shadow:
+                0 7px 20px
+                rgba(124,58,237,.12);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =====================================================
+           LOCATION
+        ===================================================== */
+
+        .location-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr auto;
+
+            gap: 10px;
+        }
+
+
+        .location-button {
+            border: 0;
+
+            border-radius: 13px;
+
+            padding:
+                0 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+        }
+
+
+        .location-button:hover {
+            opacity: .92;
+        }
+
+
+        .location-status {
+            margin-top: 8px;
+
+            padding: 10px 12px;
+
+            border-radius: 11px;
+
+            background:
+                #f1f5f9;
+
+            color:
+                #64748b;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           PHOTO
+        ===================================================== */
+
+        .photo-box {
+            padding:
+                18px;
+
+            border:
+                1px dashed #cbd5e1;
+
+            border-radius: 15px;
+
+            background:
+                #f8fafc;
+
+            text-align: center;
+        }
+
+
+        .photo-box input {
+            background: white;
+        }
+
+
+        /* =====================================================
+           SECTION DIVIDER
+        ===================================================== */
+
+        .form-section-title {
+            grid-column:
+                1 / -1;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 7px;
+
+            padding-bottom: 10px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            color:
+                #111827;
+
+            font-size: 17px;
+
+            font-weight: 900;
+        }
+
+
+        .section-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background:
+                #ede9fe;
+        }
+
+
+        /* =====================================================
+           SUBMIT
+        ===================================================== */
+
+        .submit-area {
+            grid-column:
+                1 / -1;
+
+            margin-top: 5px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid #e5e7eb;
+        }
+
+
+        .submit-button {
+            width: 100%;
+
+            border: 0;
+
+            border-radius: 15px;
+
+            padding:
+                16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #db2777,
+                    #ef4444
+                );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 28px
+                rgba(124,58,237,.22);
+
+            transition: .2s;
+        }
+
+
+        .submit-button:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 18px 35px
+                rgba(124,58,237,.30);
+        }
+
+
+        .submit-note {
+            text-align: center;
+
+            color:
+                #94a3b8;
+
+            font-size: 11px;
+
+            margin-top: 10px;
+        }
+
+
+        /* =====================================================
+           SAFETY MESSAGE
+        ===================================================== */
+
+        .safety-note {
+            margin-top: 22px;
+
+            padding: 18px;
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff7ed,
+                    #fff1f2
+                );
+
+            border:
+                1px solid #fed7aa;
+        }
+
+
+        .safety-icon {
+            width: 40px;
+            height: 40px;
+
+            flex: 0 0 40px;
+
+            border-radius: 11px;
+
+            background:
+                #ffedd5;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+
+        .safety-note strong {
+            display: block;
+
+            color:
+                #9a3412;
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .safety-note p {
+            color:
+                #7c2d12;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            background:
+                #0b1120;
+
+            color: white;
+
+            padding:
+                28px 20px;
+
+            text-align: center;
+        }
+
+
+        footer strong {
+            font-size: 14px;
+        }
+
+
+        footer p {
+            margin-top: 5px;
+
+            color:
+                #94a3b8;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 760px) {
+
+            .nav-inner {
+                padding:
+                    0 16px;
+            }
+
+
+            .brand {
+                font-size: 16px;
+            }
+
+
+            .brand-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+
+            .mobile-menu {
+                display: block;
+            }
+
+
+            .nav-links {
+                display: none;
+
+                position: absolute;
+
+                top: 70px;
+
+                left: 10px;
+                right: 10px;
+
+                padding: 10px;
+
+                border-radius: 16px;
+
+                background:
+                    linear-gradient(
+                        135deg,
+                        #111827,
+                        #312e81
+                    );
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                box-shadow:
+                    0 20px 45px
+                    rgba(0,0,0,.25);
+            }
+
+
+            .nav-links.open {
+                display: flex;
+            }
+
+
+            .nav-links a {
+                text-align: center;
+            }
+
+
+            .page {
+                padding:
+                    30px 14px 50px;
+            }
+
+
+            .form-card {
+                padding:
+                    20px 16px;
+
+                border-radius: 20px;
+            }
+
+
+            .form-grid {
+                grid-template-columns:
+                    1fr;
+
+                gap: 16px;
+            }
+
+
+            .full {
+                grid-column:
+                    auto;
+            }
+
+
+            .form-section-title,
+            .submit-area {
+                grid-column:
+                    auto;
+            }
+
+
+            .type-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+
+            .location-row {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .location-button {
+                padding: 13px;
+            }
+
+        }
+
+
+        @media (max-width: 430px) {
+
+            .type-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+
+            .type-box {
+                padding: 12px 7px;
+
+                font-size: 12px;
+            }
+
+
+            .type-box .emoji {
+                font-size: 21px;
+            }
+
+
+            .header h1 {
+                font-size: 31px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar">
+
+    <div class="nav-inner">
+
+
+        <a href="{{ url_for('home') }}"
+           class="brand">
+
+            <span class="brand-icon">
+                🚨
+            </span>
+
+            Emergency Assistance
+
+        </a>
+
+
+        <button class="mobile-menu"
+                onclick="toggleMenu()">
+
+            ☰
+
+        </button>
+
+
+        <div class="nav-links"
+             id="navLinks">
+
+            <a href="{{ url_for('home') }}"
+               class="nav-home">
+
+                Home
+
+            </a>
+
+            <a href="{{ url_for('report') }}">
+
+                Report
+
+            </a>
+
+            <a href="{{ url_for('dashboard') }}">
+
+                My Reports
+
+            </a>
+
+            <a href="{{ url_for('login') }}">
+
+                Admin / Responder
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="page">
+
+
+    <div class="header">
+
+        <span class="header-badge">
+
+            🚨 Emergency Report
+
+        </span>
+
+
+        <h1>
+
+            Report an
+            <span class="gradient-text">
+                Emergency
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Provide the information below so the emergency
+            management team can understand the situation
+            and coordinate the appropriate response.
+
+        </p>
+
+    </div>
+
+
+
+    <div class="form-card">
+
+
+        <form method="POST"
+              action="{{ url_for('report') }}"
+              enctype="multipart/form-data">
+
+
+            <div class="form-grid">
+
+
+                <!-- =================================================
+                     BASIC INFORMATION
+                ================================================== -->
+
+                <div class="form-section-title">
+
+                    <span class="section-icon">
+                        👤
+                    </span>
+
+                    Reporter Information
+
+                </div>
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Reporter Name
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Phone Number
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- =================================================
+                     EMERGENCY
+                ================================================== -->
+
+                <div class="form-section-title">
+
+                    <span class="section-icon">
+                        🚨
+                    </span>
+
+                    Emergency Information
+
+                </div>
+
+
+
+                <!-- EMERGENCY TYPE -->
+
+                <div class="form-group full">
+
+                    <label>
+
+                        Emergency Type
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="type-grid">
+
+
+                        <label class="type-option">
+
+                            <input
+                                type="radio"
+                                name="emergency_type"
+                                value="Accident"
+                                required
+                            >
+
+                            <div class="type-box">
+
+                                <span class="emoji">
+                                    🚗
+                                </span>
+
+                                Accident
+
+                            </div>
+
+                        </label>
+
+
+
+                        <label class="type-option">
+
+                            <input
+                                type="radio"
+                                name="emergency_type"
+                                value="Fire"
+                            >
+
+                            <div class="type-box">
+
+                                <span class="emoji">
+                                    🔥
+                                </span>
+
+                                Fire
+
+                            </div>
+
+                        </label>
+
+
+
+                        <label class="type-option">
+
+                            <input
+                                type="radio"
+                                name="emergency_type"
+                                value="Medical"
+                            >
+
+                            <div class="type-box">
+
+                                <span class="emoji">
+                                    🏥
+                                </span>
+
+                                Medical
+
+                            </div>
+
+                        </label>
+
+
+
+                        <label class="type-option">
+
+                            <input
+                                type="radio"
+                                name="emergency_type"
+                                value="Police"
+                            >
+
+                            <div class="type-box">
+
+                                <span class="emoji">
+                                    👮
+                                </span>
+
+                                Police
+
+                            </div>
+
+                        </label>
+
+
+
+                        <label class="type-option">
+
+                            <input
+                                type="radio"
+                                name="emergency_type"
+                                value="Women Safety"
+                            >
+
+                            <div class="type-box">
+
+                                <span class="emoji">
+                                    🛡️
+                                </span>
+
+                                Women Safety
+
+                            </div>
+
+                        </label>
+
+
+
+                        <label class="type-option">
+
+                            <input
+                                type="radio"
+                                name="emergency_type"
+                                value="Other"
+                            >
+
+                            <div class="type-box">
+
+                                <span class="emoji">
+                                    🆘
+                                </span>
+
+                                Other
+
+                            </div>
+
+                        </label>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SEVERITY -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Severity
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <select name="severity"
+                            required>
+
+                        <option value="">
+                            Select severity
+                        </option>
+
+                        <option value="Low">
+                            🟢 Low
+                        </option>
+
+                        <option value="Medium">
+                            🟡 Medium
+                        </option>
+
+                        <option value="High">
+                            🟠 High
+                        </option>
+
+                        <option value="Critical">
+                            🔴 Critical
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Location
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="location-row">
+
+                        <input
+                            type="text"
+                            name="location"
+                            id="location"
+                            placeholder="Enter location"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="location-button"
+                            onclick="getLocation()">
+
+                            📍 Use GPS
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="location-status"
+                         id="locationStatus">
+
+                        📍 GPS location has not been captured.
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ADDRESS -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Address
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="address"
+                        placeholder="Enter complete address or nearby landmark"
+                    >
+
+                </div>
+
+
+
+                <!-- HIDDEN GPS -->
+
+                <input
+                    type="hidden"
+                    name="latitude"
+                    id="latitude"
+                >
+
+
+                <input
+                    type="hidden"
+                    name="longitude"
+                    id="longitude"
+                >
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full">
+
+                    <label>
+
+                        What Happened?
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <textarea
+                        name="description"
+                        placeholder="Briefly describe what happened, how many people are affected, and any important information..."
+                        required
+                    ></textarea>
+
+
+                    <span class="hint">
+
+                        Please provide clear information that may help responders.
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- PHOTO -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Supporting Photo
+                    </label>
+
+
+                    <div class="photo-box">
+
+                        <input
+                            type="file"
+                            name="photo"
+                            accept="image/*"
+                        >
+
+                        <div class="hint">
+
+                            Optional — JPG, PNG or WEBP
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
+                <div class="submit-area">
+
+
+                    <button
+                        type="submit"
+                        class="submit-button">
+
+                        🚨 Submit Emergency Report
+
+                    </button>
+
+
+                    <div class="submit-note">
+
+                        Your information will be recorded in the
+                        Emergency Assistance Management System.
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </form>
+
+
+        <!-- SAFETY -->
+
+        <div class="safety-note">
+
+            <div class="safety-icon">
+                ⚠️
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Important Emergency Notice
+                </strong>
+
+
+                <p>
+
+                    For immediate life-threatening situations,
+                    also contact your local emergency services.
+                    This application is an emergency assistance
+                    management system.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <strong>
+        🚨 Emergency Assistance
+    </strong>
+
+    <p>
+        Fast • Safe • Reliable Emergency Support
+    </p>
+
+</footer>
+
+
+
+<script>
+
+    /* =====================================================
+       MOBILE MENU
+    ===================================================== */
+
+    function toggleMenu() {
+
+        document
+            .getElementById("navLinks")
+            .classList
+            .toggle("open");
+
+    }
+
+
+
+    /* =====================================================
+       GPS
+    ===================================================== */
+
+    function getLocation() {
+
+        const status =
+            document.getElementById(
+                "locationStatus"
+            );
+
+
+        if (!navigator.geolocation) {
+
+            status.textContent =
+                "⚠️ GPS is not supported by this browser.";
+
+            return;
+
+        }
+
+
+        status.textContent =
+            "📍 Getting your current location...";
+
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position) {
+
+                const latitude =
+                    position.coords.latitude;
+
+                const longitude =
+                    position.coords.longitude;
+
+
+                document
+                    .getElementById("latitude")
+                    .value =
+                    latitude;
+
+
+                document
+                    .getElementById("longitude")
+                    .value =
+                    longitude;
+
+
+                document
+                    .getElementById("location")
+                    .value =
+                    latitude.toFixed(6)
+                    + ", "
+                    + longitude.toFixed(6);
+
+
+                status.textContent =
+                    "✅ GPS location captured successfully.";
+
+            },
+
+
+            function(error) {
+
+                status.textContent =
+                    "⚠️ Unable to get GPS location. Please enter the location manually.";
+
+            },
+
+
+            {
+                enableHighAccuracy: true,
+
+                timeout: 10000,
+
+                maximumAge: 0
+
+            }
+
+        );
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

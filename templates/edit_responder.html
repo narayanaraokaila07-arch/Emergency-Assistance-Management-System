@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Responder | Emergency Assistance</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 16px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 13px;
+            border-radius: 8px;
+            background: #1f2937;
+        }
+
+        .nav-links a:hover {
+            background: #374151;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .page-title p {
+            color: #6b7280;
+            margin-top: 8px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .responder-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 25px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #fee2e2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .responder-info h3 {
+            margin: 0 0 5px;
+        }
+
+        .responder-info p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .help {
+            margin-top: 6px;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .password-note {
+            padding: 12px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            flex: 1;
+            border: none;
+            border-radius: 9px;
+            padding: 13px 18px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .save-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .cancel-btn {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .cancel-btn:hover {
+            background: #d1d5db;
+        }
+
+        .flash {
+            padding: 13px 16px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+        }
+
+        .flash.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .flash.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+                padding: 0 12px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .navbar {
+                padding: 14px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="brand">
+        🚑 Emergency Assistance
+    </div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('admin') }}">Admin</a>
+
+        <a href="{{ url_for('responders') }}">
+            Responders
+        </a>
+
+        <a href="{{ url_for('stations') }}">
+            Stations
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="page-title">
+        <h1>✏️ Edit Responder</h1>
+        <p>Update responder information and login details.</p>
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="card">
+
+        <div class="responder-info">
+
+            <div class="avatar">
+                🚑
+            </div>
+
+            <div>
+
+                <h3>
+                    {{ responder["name"] }}
+                </h3>
+
+                <p>
+                    Responder ID: #{{ responder["id"] }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form method="POST"
+              action="{{ url_for('edit_responder', responder_id=responder['id']) }}">
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label for="name">
+                    Responder Name
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="{{ responder['name'] or '' }}"
+                    placeholder="Enter responder name"
+                    required>
+
+            </div>
+
+
+            <!-- DEPARTMENT -->
+
+            <div class="form-group">
+
+                <label for="department">
+                    Department
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="department"
+                    name="department"
+                    value="{{ responder['department'] or '' }}"
+                    placeholder="Police / Ambulance / Fire / Medical"
+                    required>
+
+                <div class="help">
+                    Example: Police, Ambulance, Fire & Rescue, Medical Emergency
+                </div>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value="{{ responder['phone'] or '' }}"
+                    placeholder="Enter phone number"
+                    required>
+
+            </div>
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="login_username">
+                    Login Username
+                </label>
+
+                <input
+                    type="text"
+                    id="login_username"
+                    name="login_username"
+                    value="{{ responder['login_username'] or '' }}"
+                    placeholder="Responder login username">
+
+                <div class="help">
+                    Responder uses this username to log in.
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="password-note">
+                🔐 Leave the password empty if you do not want to change it.
+            </div>
+
+            <div class="form-group">
+
+                <label for="login_password">
+                    New Password
+                </label>
+
+                <input
+                    type="password"
+                    id="login_password"
+                    name="login_password"
+                    placeholder="Enter new password">
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+                <label for="status">
+                    Responder Status
+                    <span class="required">*</span>
+                </label>
+
+                <select id="status"
+                        name="status"
+                        required>
+
+                    <option value="Available"
+                        {% if responder["status"] == "Available" %}
+                            selected
+                        {% endif %}>
+                        Available
+                    </option>
+
+                    <option value="Busy"
+                        {% if responder["status"] == "Busy" %}
+                            selected
+                        {% endif %}>
+                        Busy
+                    </option>
+
+                    <option value="Offline"
+                        {% if responder["status"] == "Offline" %}
+                            selected
+                        {% endif %}>
+                        Offline
+                    </option>
+
+                </select>
+
+                <div class="help">
+                    Available responders can automatically receive new emergencies.
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <a href="{{ url_for('responders') }}"
+                   class="btn cancel-btn">
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn save-btn">
+                    💾 Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Emergency Reports</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+nav {
+    background: #111827;
+    color: white;
+    padding: 16px 7%;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+.header {
+    margin-bottom: 25px;
+}
+
+.report {
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 7px 25px rgba(0,0,0,.07);
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.status {
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.info {
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.label {
+    font-size: 12px;
+    color: #667085;
+}
+
+.value {
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 11px 16px;
+    border-radius: 9px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.call {
+    background: #16a34a;
+}
+
+.empty {
+    background: white;
+    padding: 40px;
+    text-align: center;
+    border-radius: 16px;
+}
+
+@media(max-width:700px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<strong>🚨 Emergency Assistance</strong>
+
+<div>
+<a href="{{ url_for('home') }}">Home</a>
+<a href="{{ url_for('report') }}">Report Emergency</a>
+</div>
+
+</nav>
+
+
+<div class="container">
+
+<div class="header">
+
+<h1>📋 My Emergency Reports</h1>
+
+<p>
+Track your reported emergencies and assigned responders.
+</p>
+
+</div>
+
+
+{% if emergencies %}
+
+{% for emergency in emergencies %}
+
+<div class="report">
+
+<div class="top">
+
+<h2>
+#{{ emergency.id }}
+-
+{{ emergency.emergency_type }}
+</h2>
+
+<span class="status">
+{{ emergency.status }}
+</span>
+
+</div>
+
+
+<div class="grid">
+
+<div class="info">
+
+<div class="label">
+Reporter
+</div>
+
+<div class="value">
+{{ emergency.name or emergency.reporter_name }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Emergency
+</div>
+
+<div class="value">
+{{ emergency.emergency_type }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Severity
+</div>
+
+<div class="value">
+{{ emergency.severity }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Responder
+</div>
+
+<div class="value">
+{{ emergency.responder or "Not assigned" }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Location
+</div>
+
+<div class="value">
+{{ emergency.address or emergency.location or "Unavailable" }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">
+Reported
+</div>
+
+<div class="value">
+{{ emergency.created_at }}
+</div>
+
+</div>
+
+</div>
+
+
+<a class="btn"
+   href="{{ url_for('emergency_details', emergency_id=emergency.id) }}">
+View Full Details →
+</a>
+
+
+{% if emergency.responder_id %}
+
+{% if emergency.responder_phone %}
+
+<a class="btn call"
+   href="tel:{{ emergency.responder_phone }}">
+📞 Call Responder
+</a>
+
+{% endif %}
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="empty">
+
+<h2>No Emergency Reports</h2>
+
+<p>
+You have not reported any emergency yet.
+</p>
+
+<a class="btn"
+   href="{{ url_for('report') }}">
+🚨 Report Emergency
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

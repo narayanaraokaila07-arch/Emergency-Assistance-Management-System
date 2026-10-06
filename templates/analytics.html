@@ -1,0 +1,4987 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#07111f">
+
+    <meta name="apple-mobile-web-app-capable"
+          content="yes">
+
+    <meta name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent">
+
+    <title>Emergency Assistance</title>
+
+
+    <style>
+
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background:
+                #f4f7fb;
+
+            color:
+                #101828;
+
+            overflow-x:
+                hidden;
+        }
+
+        body.modal-open {
+            overflow:
+                hidden;
+        }
+
+        a {
+            color:
+                inherit;
+
+            text-decoration:
+                none;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family:
+                inherit;
+        }
+
+
+        /* =========================================================
+           VARIABLES
+        ========================================================= */
+
+        :root {
+
+            --navy:
+                #07111f;
+
+            --navy2:
+                #0c192b;
+
+            --red:
+                #ef233c;
+
+            --red-dark:
+                #c8102e;
+
+            --blue:
+                #2563eb;
+
+            --green:
+                #16a34a;
+
+            --pink:
+                #db2777;
+
+            --text:
+                #101828;
+
+            --muted:
+                #667085;
+
+            --border:
+                #e4e7ec;
+
+            --white:
+                #ffffff;
+
+            --shadow:
+                0 20px 60px rgba(16,24,40,.10);
+
+        }
+
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+
+            height:
+                74px;
+
+            width:
+                100%;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                2000;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 clamp(18px, 5vw, 70px);
+
+            background:
+                rgba(7,17,31,.94);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.08);
+
+            box-shadow:
+                0 8px 30px
+                rgba(0,0,0,.12);
+        }
+
+
+        .brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+
+            color:
+                white;
+        }
+
+
+        .brand-logo {
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                13px;
+
+            font-size:
+                21px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff3048,
+                    #c90025
+                );
+
+            box-shadow:
+                0 8px 25px
+                rgba(239,35,60,.32);
+        }
+
+
+        .brand-text strong {
+
+            display:
+                block;
+
+            font-size:
+                16px;
+
+            line-height:
+                1.1;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                -.3px;
+        }
+
+
+        .brand-text span {
+
+            display:
+                block;
+
+            color:
+                #8d9aae;
+
+            font-size:
+                9px;
+
+            margin-top:
+                3px;
+
+            letter-spacing:
+                1px;
+
+            font-weight:
+                700;
+        }
+
+
+        .desktop-nav {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                5px;
+        }
+
+
+        .desktop-nav a {
+
+            padding:
+                10px 14px;
+
+            border-radius:
+                10px;
+
+            color:
+                #cbd5e1;
+
+            font-size:
+                12px;
+
+            font-weight:
+                750;
+
+            transition:
+                .25s;
+        }
+
+
+        .desktop-nav a:hover {
+
+            color:
+                white;
+
+            background:
+                rgba(255,255,255,.08);
+        }
+
+
+        .nav-report {
+
+            color:
+                white !important;
+
+            background:
+                rgba(239,35,60,.15);
+
+            border:
+                1px solid
+                rgba(239,35,60,.28);
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+
+            min-height:
+                590px;
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            text-align:
+                center;
+
+            padding:
+                70px 20px 125px;
+
+            color:
+                white;
+
+            background:
+
+                radial-gradient(
+                    circle at 50% 35%,
+                    rgba(239,35,60,.19),
+                    transparent 25%
+                ),
+
+                radial-gradient(
+                    circle at 10% 80%,
+                    rgba(37,99,235,.15),
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(168,85,247,.10),
+                    transparent 25%
+                ),
+
+                linear-gradient(
+                    145deg,
+                    #050b15,
+                    #091526 55%,
+                    #06101e
+                );
+        }
+
+
+        .hero::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                650px;
+
+            height:
+                650px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.045);
+
+            border-radius:
+                50%;
+
+            left:
+                50%;
+
+            top:
+                50%;
+
+            transform:
+                translate(-50%,-43%);
+        }
+
+
+        .hero::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                420px;
+
+            height:
+                420px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.035);
+
+            border-radius:
+                50%;
+
+            left:
+                50%;
+
+            top:
+                50%;
+
+            transform:
+                translate(-50%,-43%);
+        }
+
+
+        .hero-content {
+
+            max-width:
+                850px;
+
+            position:
+                relative;
+
+            z-index:
+                5;
+        }
+
+
+        .status-pill {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            padding:
+                8px 15px;
+
+            border-radius:
+                50px;
+
+            background:
+                rgba(255,255,255,.065);
+
+            border:
+                1px solid
+                rgba(255,255,255,.11);
+
+            color:
+                #dce7f6;
+
+            font-size:
+                10px;
+
+            font-weight:
+                850;
+
+            letter-spacing:
+                1.1px;
+
+            margin-bottom:
+                23px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,.15);
+        }
+
+
+        .live-dot {
+
+            width:
+                8px;
+
+            height:
+                8px;
+
+            border-radius:
+                50%;
+
+            background:
+                #22c55e;
+
+            box-shadow:
+                0 0 14px
+                #22c55e;
+
+            animation:
+                livePulse 1.7s infinite;
+        }
+
+
+        @keyframes livePulse {
+
+            0%,100% {
+                opacity:
+                    1;
+
+                transform:
+                    scale(1);
+            }
+
+            50% {
+                opacity:
+                    .45;
+
+                transform:
+                    scale(.75);
+            }
+
+        }
+
+
+        .hero h1 {
+
+            font-size:
+                clamp(
+                    43px,
+                    7vw,
+                    78px
+                );
+
+            line-height:
+                1;
+
+            letter-spacing:
+                -4px;
+
+            font-weight:
+                950;
+
+            margin-bottom:
+                22px;
+        }
+
+
+        .hero h1 .highlight {
+
+            color:
+                #ff4056;
+
+            text-shadow:
+                0 0 35px
+                rgba(239,35,60,.18);
+        }
+
+
+        .hero-description {
+
+            max-width:
+                680px;
+
+            margin:
+                auto;
+
+            color:
+                #9eabbc;
+
+            font-size:
+                16px;
+
+            line-height:
+                1.75;
+        }
+
+
+        .hero-mini {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            gap:
+                20px;
+
+            margin-top:
+                27px;
+
+            color:
+                #7f8da0;
+
+            font-size:
+                10px;
+
+            font-weight:
+                700;
+        }
+
+
+        .hero-mini span {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                6px;
+        }
+
+
+        /* =========================================================
+           SOS PANEL
+        ========================================================= */
+
+        .sos-wrap {
+
+            position:
+                relative;
+
+            z-index:
+                20;
+
+            margin-top:
+                -88px;
+
+            padding:
+                0 18px;
+        }
+
+
+        .sos-panel {
+
+            max-width:
+                1100px;
+
+            min-height:
+                340px;
+
+            margin:
+                auto;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1.05fr .95fr;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                30px;
+
+            background:
+                rgba(255,255,255,.98);
+
+            border:
+                1px solid
+                rgba(255,255,255,.8);
+
+            box-shadow:
+                0 35px 90px
+                rgba(15,23,42,.18);
+        }
+
+
+        /* =========================================================
+           SOS LEFT
+        ========================================================= */
+
+        .sos-left {
+
+            min-height:
+                340px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                38px;
+
+            text-align:
+                center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #fff8f8
+                );
+
+            border-right:
+                1px solid
+                #edf0f4;
+        }
+
+
+        .sos-small {
+
+            color:
+                #b42318;
+
+            font-size:
+                9px;
+
+            letter-spacing:
+                1.7px;
+
+            font-weight:
+                950;
+
+            margin-bottom:
+                17px;
+        }
+
+
+        .sos-button {
+
+            width:
+                185px;
+
+            height:
+                185px;
+
+            border:
+                12px solid
+                #ffe4e6;
+
+            border-radius:
+                50%;
+
+            background:
+                radial-gradient(
+                    circle at 35% 25%,
+                    #ff5a69,
+                    #ef233c 48%,
+                    #c8102e
+                );
+
+            color:
+                white;
+
+            font-size:
+                34px;
+
+            font-weight:
+                950;
+
+            letter-spacing:
+                1px;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 0 0 7px
+                rgba(239,35,60,.06),
+
+                0 20px 50px
+                rgba(200,16,46,.35);
+
+            transition:
+                .28s;
+
+            animation:
+                sosGlow 2.5s infinite;
+        }
+
+
+        .sos-button:hover {
+
+            transform:
+                scale(1.055);
+
+            box-shadow:
+                0 0 0 13px
+                rgba(239,35,60,.055),
+
+                0 28px 65px
+                rgba(200,16,46,.42);
+        }
+
+
+        .sos-button:active {
+
+            transform:
+                scale(.97);
+        }
+
+
+        @keyframes sosGlow {
+
+            0%,100% {
+
+                box-shadow:
+                    0 0 0 7px
+                    rgba(239,35,60,.06),
+
+                    0 20px 50px
+                    rgba(200,16,46,.35);
+            }
+
+            50% {
+
+                box-shadow:
+                    0 0 0 16px
+                    rgba(239,35,60,.025),
+
+                    0 25px 60px
+                    rgba(200,16,46,.38);
+            }
+
+        }
+
+
+        .sos-left h2 {
+
+            margin-top:
+                19px;
+
+            font-size:
+                21px;
+
+            font-weight:
+                900;
+        }
+
+
+        .sos-left p {
+
+            color:
+                #667085;
+
+            font-size:
+                11px;
+
+            margin-top:
+                5px;
+        }
+
+
+        /* =========================================================
+           QUICK ACTIONS
+        ========================================================= */
+
+        .quick-side {
+
+            padding:
+                34px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            justify-content:
+                center;
+        }
+
+
+        .quick-top {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-end;
+
+            margin-bottom:
+                17px;
+        }
+
+
+        .quick-top h3 {
+
+            font-size:
+                17px;
+
+            font-weight:
+                900;
+        }
+
+
+        .quick-top span {
+
+            font-size:
+                9px;
+
+            color:
+                #98a2b3;
+
+            font-weight:
+                700;
+        }
+
+
+        .quick-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                10px;
+        }
+
+
+        .quick-card {
+
+            min-height:
+                105px;
+
+            padding:
+                15px;
+
+            border:
+                1px solid
+                #e7eaf0;
+
+            border-radius:
+                15px;
+
+            background:
+                white;
+
+            transition:
+                .25s;
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+        }
+
+
+        .quick-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                #d0d5dd;
+
+            box-shadow:
+                0 15px 30px
+                rgba(16,24,40,.08);
+        }
+
+
+        .quick-card::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                70px;
+
+            height:
+                70px;
+
+            border-radius:
+                50%;
+
+            right:
+                -38px;
+
+            bottom:
+                -38px;
+
+            background:
+                #f8fafc;
+        }
+
+
+        .quick-icon {
+
+            width:
+                37px;
+
+            height:
+                37px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                10px;
+
+            background:
+                #f2f4f7;
+
+            font-size:
+                18px;
+
+            margin-bottom:
+                10px;
+        }
+
+
+        .quick-card h4 {
+
+            font-size:
+                12px;
+
+            font-weight:
+                850;
+        }
+
+
+        .quick-card p {
+
+            color:
+                #667085;
+
+            font-size:
+                9px;
+
+            line-height:
+                1.4;
+
+            margin-top:
+                3px;
+        }
+
+
+        .women-quick {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fff1f6,
+                    white
+                );
+
+            border-color:
+                #f4bfd3;
+        }
+
+
+        .women-quick .quick-icon {
+
+            background:
+                #fce7f3;
+        }
+
+
+        /* =========================================================
+           TRUST STRIP
+        ========================================================= */
+
+        .trust-strip {
+
+            max-width:
+                1100px;
+
+            margin:
+                18px auto 0;
+
+            padding:
+                0 18px;
+        }
+
+
+        .trust-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap:
+                10px;
+        }
+
+
+        .trust {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+
+            min-height:
+                65px;
+
+            padding:
+                10px 15px;
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #e7eaf0;
+
+            border-radius:
+                14px;
+        }
+
+
+        .trust-icon {
+
+            width:
+                37px;
+
+            height:
+                37px;
+
+            flex-shrink:
+                0;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                10px;
+
+            background:
+                #f2f4f7;
+
+            font-size:
+                17px;
+        }
+
+
+        .trust strong {
+
+            display:
+                block;
+
+            font-size:
+                10px;
+        }
+
+
+        .trust span {
+
+            display:
+                block;
+
+            color:
+                #98a2b3;
+
+            font-size:
+                8px;
+
+            margin-top:
+                2px;
+        }
+
+
+        /* =========================================================
+           GENERAL SECTION
+        ========================================================= */
+
+        .section {
+
+            max-width:
+                1100px;
+
+            margin:
+                75px auto 0;
+
+            padding:
+                0 18px;
+        }
+
+
+        .section-heading {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-end;
+
+            margin-bottom:
+                24px;
+        }
+
+
+        .section-heading .eyebrow {
+
+            color:
+                #ef233c;
+
+            font-size:
+                9px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                1.5px;
+
+            margin-bottom:
+                6px;
+        }
+
+
+        .section-heading h2 {
+
+            font-size:
+                29px;
+
+            line-height:
+                1.1;
+
+            letter-spacing:
+                -1px;
+
+            font-weight:
+                920;
+        }
+
+
+        .section-heading p {
+
+            color:
+                #667085;
+
+            font-size:
+                12px;
+
+            max-width:
+                470px;
+
+            line-height:
+                1.5;
+
+            text-align:
+                right;
+        }
+
+
+        /* =========================================================
+           SERVICE CARDS
+        ========================================================= */
+
+        .services {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap:
+                14px;
+        }
+
+
+        .service-card {
+
+            min-height:
+                205px;
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            padding:
+                23px;
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #e7eaf0;
+
+            border-radius:
+                20px;
+
+            transition:
+                .3s;
+        }
+
+
+        .service-card:hover {
+
+            transform:
+                translateY(-7px);
+
+            box-shadow:
+                0 20px 45px
+                rgba(16,24,40,.10);
+
+            border-color:
+                #d0d5dd;
+        }
+
+
+        .service-number {
+
+            position:
+                absolute;
+
+            right:
+                17px;
+
+            top:
+                17px;
+
+            color:
+                #d0d5dd;
+
+            font-size:
+                11px;
+
+            font-weight:
+                900;
+        }
+
+
+        .service-icon {
+
+            width:
+                51px;
+
+            height:
+                51px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                15px;
+
+            font-size:
+                25px;
+
+            margin-bottom:
+                21px;
+        }
+
+
+        .service-card h3 {
+
+            font-size:
+                15px;
+
+            font-weight:
+                900;
+
+            margin-bottom:
+                7px;
+        }
+
+
+        .service-card p {
+
+            color:
+                #667085;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.6;
+        }
+
+
+        .service-link {
+
+            position:
+                absolute;
+
+            bottom:
+                20px;
+
+            left:
+                23px;
+
+            color:
+                #344054;
+
+            font-size:
+                9px;
+
+            font-weight:
+                850;
+        }
+
+
+        .service-link span {
+
+            margin-left:
+                4px;
+
+            transition:
+                .2s;
+        }
+
+
+        .service-card:hover
+        .service-link span {
+
+            margin-left:
+                8px;
+        }
+
+
+        .accident-icon {
+            background:#fff7ed;
+        }
+
+        .fire-icon {
+            background:#fff1f2;
+        }
+
+        .medical-icon {
+            background:#ecfdf3;
+        }
+
+        .police-icon {
+            background:#eff6ff;
+        }
+
+
+        /* =========================================================
+           WOMEN SAFETY
+        ========================================================= */
+
+        .safety-section {
+
+            max-width:
+                1100px;
+
+            margin:
+                70px auto;
+
+            padding:
+                0 18px;
+        }
+
+
+        .safety-box {
+
+            min-height:
+                235px;
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr auto;
+
+            align-items:
+                center;
+
+            gap:
+                30px;
+
+            padding:
+                40px;
+
+            border-radius:
+                27px;
+
+            color:
+                white;
+
+            background:
+
+                radial-gradient(
+                    circle at 85% 30%,
+                    rgba(255,255,255,.14),
+                    transparent 24%
+                ),
+
+                linear-gradient(
+                    120deg,
+                    #6b1742,
+                    #a51659 55%,
+                    #d12672
+                );
+
+            box-shadow:
+                0 25px 60px
+                rgba(190,24,93,.20);
+        }
+
+
+        .safety-circle {
+
+            position:
+                absolute;
+
+            width:
+                270px;
+
+            height:
+                270px;
+
+            right:
+                -65px;
+
+            top:
+                -90px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            border-radius:
+                50%;
+        }
+
+
+        .safety-content {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+        }
+
+
+        .safety-tag {
+
+            display:
+                inline-flex;
+
+            padding:
+                6px 10px;
+
+            border-radius:
+                50px;
+
+            background:
+                rgba(255,255,255,.12);
+
+            border:
+                1px solid
+                rgba(255,255,255,.14);
+
+            font-size:
+                8px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                1.2px;
+
+            margin-bottom:
+                13px;
+        }
+
+
+        .safety-box h2 {
+
+            font-size:
+                29px;
+
+            letter-spacing:
+                -.8px;
+
+            font-weight:
+                950;
+
+            margin-bottom:
+                9px;
+        }
+
+
+        .safety-box p {
+
+            max-width:
+                620px;
+
+            color:
+                #fce7f3;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.65;
+        }
+
+
+        .safety-action {
+
+            position:
+                relative;
+
+            z-index:
+                4;
+
+            min-width:
+                180px;
+
+            padding:
+                15px 20px;
+
+            border:
+                0;
+
+            border-radius:
+                13px;
+
+            background:
+                white;
+
+            color:
+                #a51659;
+
+            font-size:
+                10px;
+
+            font-weight:
+                950;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,0,0,.18);
+
+            transition:
+                .25s;
+        }
+
+
+        .safety-action:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 20px 40px
+                rgba(0,0,0,.24);
+        }
+
+
+        /* =========================================================
+           HOW IT WORKS
+        ========================================================= */
+
+        .steps {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap:
+                15px;
+        }
+
+
+        .step {
+
+            position:
+                relative;
+
+            padding:
+                25px;
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #e7eaf0;
+
+            border-radius:
+                18px;
+        }
+
+
+        .step-number {
+
+            width:
+                39px;
+
+            height:
+                39px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                11px;
+
+            background:
+                #eef2ff;
+
+            color:
+                #3730a3;
+
+            font-size:
+                12px;
+
+            font-weight:
+                950;
+
+            margin-bottom:
+                18px;
+        }
+
+
+        .step h3 {
+
+            font-size:
+                14px;
+
+            font-weight:
+                900;
+
+            margin-bottom:
+                7px;
+        }
+
+
+        .step p {
+
+            color:
+                #667085;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.6;
+        }
+
+
+        /* =========================================================
+           CTA
+        ========================================================= */
+
+        .cta {
+
+            margin:
+                70px auto;
+
+            max-width:
+                1100px;
+
+            padding:
+                0 18px;
+        }
+
+
+        .cta-inner {
+
+            padding:
+                35px;
+
+            border-radius:
+                23px;
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                20px;
+
+            background:
+                #0b1727;
+
+            color:
+                white;
+        }
+
+
+        .cta-inner h2 {
+
+            font-size:
+                22px;
+
+            font-weight:
+                900;
+        }
+
+
+        .cta-inner p {
+
+            color:
+                #94a3b8;
+
+            font-size:
+                11px;
+
+            margin-top:
+                5px;
+        }
+
+
+        .cta-btn {
+
+            white-space:
+                nowrap;
+
+            padding:
+                13px 20px;
+
+            border-radius:
+                11px;
+
+            color:
+                white;
+
+            background:
+                #ef233c;
+
+            font-size:
+                10px;
+
+            font-weight:
+                900;
+
+            transition:
+                .25s;
+        }
+
+
+        .cta-btn:hover {
+
+            background:
+                #d91632;
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+
+            padding:
+                50px 20px 30px;
+
+            background:
+                #050b14;
+
+            color:
+                #8c99aa;
+
+            text-align:
+                center;
+        }
+
+
+        .footer-logo {
+
+            color:
+                white;
+
+            font-size:
+                17px;
+
+            font-weight:
+                900;
+
+            margin-bottom:
+                8px;
+        }
+
+
+        footer p {
+
+            font-size:
+                10px;
+
+            line-height:
+                1.6;
+        }
+
+
+        .footer-line {
+
+            width:
+                70px;
+
+            height:
+                1px;
+
+            margin:
+                20px auto;
+
+            background:
+                rgba(255,255,255,.1);
+        }
+
+
+        .copyright {
+
+            color:
+                #596577;
+
+            font-size:
+                8px;
+        }
+
+
+        /* =========================================================
+           MODAL
+        ========================================================= */
+
+        .modal {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                5000;
+
+            display:
+                none;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                15px;
+
+            background:
+                rgba(2,7,16,.84);
+
+            backdrop-filter:
+                blur(10px);
+
+            -webkit-backdrop-filter:
+                blur(10px);
+        }
+
+
+        .modal.active {
+
+            display:
+                flex;
+        }
+
+
+        .modal-box {
+
+            width:
+                min(570px,100%);
+
+            max-height:
+                92vh;
+
+            overflow-y:
+                auto;
+
+            position:
+                relative;
+
+            padding:
+                29px;
+
+            border-radius:
+                24px;
+
+            background:
+                white;
+
+            box-shadow:
+                0 35px 100px
+                rgba(0,0,0,.45);
+
+            animation:
+                modalIn .25s ease;
+        }
+
+
+        @keyframes modalIn {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateY(20px)
+                    scale(.97);
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+
+        }
+
+
+        .close-btn {
+
+            position:
+                absolute;
+
+            right:
+                15px;
+
+            top:
+                15px;
+
+            width:
+                37px;
+
+            height:
+                37px;
+
+            border:
+                0;
+
+            border-radius:
+                50%;
+
+            background:
+                #f2f4f7;
+
+            color:
+                #344054;
+
+            font-size:
+                22px;
+
+            cursor:
+                pointer;
+        }
+
+
+        .modal-title {
+
+            font-size:
+                24px;
+
+            font-weight:
+                950;
+
+            padding-right:
+                40px;
+        }
+
+
+        .modal-description {
+
+            color:
+                #667085;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.6;
+
+            margin:
+                6px 0 20px;
+        }
+
+
+        .emergency-types {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                8px;
+        }
+
+
+        .type-option {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                13px;
+
+            border:
+                1px solid
+                #e4e7ec;
+
+            border-radius:
+                12px;
+
+            cursor:
+                pointer;
+
+            color:
+                #344054;
+
+            font-size:
+                11px;
+
+            font-weight:
+                750;
+
+            transition:
+                .2s;
+        }
+
+
+        .type-option:hover {
+
+            background:
+                #f9fafb;
+        }
+
+
+        .type-option:has(input:checked) {
+
+            color:
+                #b42318;
+
+            border-color:
+                #fca5a5;
+
+            background:
+                #fff1f2;
+        }
+
+
+        .type-option input {
+
+            accent-color:
+                #ef233c;
+        }
+
+
+        .safety-reason {
+
+            display:
+                none;
+
+            margin-top:
+                10px;
+        }
+
+
+        .safety-reason textarea {
+
+            width:
+                100%;
+
+            min-height:
+                75px;
+
+            resize:
+                vertical;
+
+            padding:
+                11px;
+
+            border:
+                1px solid
+                #e4e7ec;
+
+            border-radius:
+                11px;
+
+            outline:
+                none;
+
+            font-size:
+                11px;
+        }
+
+
+        .safety-reason textarea:focus {
+
+            border-color:
+                #db2777;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(219,39,119,.08);
+        }
+
+
+        .location-box {
+
+            margin:
+                15px 0;
+
+            padding:
+                14px;
+
+            border:
+                1px solid
+                #e4e7ec;
+
+            border-radius:
+                13px;
+
+            background:
+                #f8fafc;
+        }
+
+
+        .location-title {
+
+            font-size:
+                11px;
+
+            font-weight:
+                850;
+        }
+
+
+        .location-detail {
+
+            color:
+                #667085;
+
+            font-size:
+                9px;
+
+            line-height:
+                1.5;
+
+            margin-top:
+                3px;
+        }
+
+
+        .send-button {
+
+            width:
+                100%;
+
+            padding:
+                15px;
+
+            border:
+                0;
+
+            border-radius:
+                12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef233c,
+                    #c8102e
+                );
+
+            color:
+                white;
+
+            font-size:
+                12px;
+
+            font-weight:
+                950;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 10px 25px
+                rgba(239,35,60,.23);
+
+            transition:
+                .2s;
+        }
+
+
+        .send-button:hover {
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .send-button:disabled {
+
+            opacity:
+                .55;
+
+            cursor:
+                not-allowed;
+
+            transform:
+                none;
+        }
+
+
+        /* =========================================================
+           RESULT
+        ========================================================= */
+
+        .result {
+
+            display:
+                none;
+
+            margin-top:
+                15px;
+
+            padding:
+                15px;
+
+            border:
+                1px solid
+                #86efac;
+
+            border-radius:
+                13px;
+
+            background:
+                #f0fdf4;
+        }
+
+
+        .result.show {
+
+            display:
+                block;
+        }
+
+
+        .result h3 {
+
+            color:
+                #166534;
+
+            font-size:
+                14px;
+
+            margin-bottom:
+                10px;
+        }
+
+
+        .row {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            padding:
+                7px 0;
+
+            border-bottom:
+                1px solid
+                rgba(22,101,52,.10);
+
+            font-size:
+                10px;
+        }
+
+
+        .row:last-child {
+
+            border-bottom:
+                0;
+        }
+
+
+        .label {
+
+            color:
+                #667085;
+        }
+
+
+        .value {
+
+            font-weight:
+                850;
+
+            text-align:
+                right;
+        }
+
+
+        .result-actions {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+            margin-top:
+                13px;
+        }
+
+
+        .result-actions a,
+        .result-actions button {
+
+            flex:
+                1;
+
+            padding:
+                11px;
+
+            border:
+                0;
+
+            border-radius:
+                9px;
+
+            cursor:
+                pointer;
+
+            text-align:
+                center;
+
+            font-size:
+                10px;
+
+            font-weight:
+                850;
+        }
+
+
+        .reports {
+
+            color:
+                white;
+
+            background:
+                #101828;
+        }
+
+
+        .secondary {
+
+            color:
+                #344054;
+
+            background:
+                #eaecf0;
+        }
+
+
+        /* =========================================================
+           MOBILE BOTTOM NAV
+        ========================================================= */
+
+        .mobile-nav {
+
+            display:
+                none;
+        }
+
+
+        /* =========================================================
+           TABLET
+        ========================================================= */
+
+        @media(max-width:950px) {
+
+            .services {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+
+            .sos-panel {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .sos-left {
+
+                border-right:
+                    0;
+
+                border-bottom:
+                    1px solid
+                    #edf0f4;
+            }
+
+
+            .safety-box {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .safety-action {
+
+                width:
+                    200px;
+            }
+
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media(max-width:650px) {
+
+            body {
+
+                padding-bottom:
+                    68px;
+            }
+
+
+            .navbar {
+
+                height:
+                    63px;
+
+                padding:
+                    0 14px;
+            }
+
+
+            .brand-logo {
+
+                width:
+                    36px;
+
+                height:
+                    36px;
+
+                font-size:
+                    18px;
+
+                border-radius:
+                    11px;
+            }
+
+
+            .brand-text strong {
+
+                font-size:
+                    14px;
+            }
+
+
+            .brand-text span {
+
+                font-size:
+                    7px;
+            }
+
+
+            .desktop-nav {
+
+                display:
+                    none;
+            }
+
+
+            .hero {
+
+                min-height:
+                    470px;
+
+                padding:
+                    53px 20px 105px;
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    43px;
+
+                letter-spacing:
+                    -2.7px;
+            }
+
+
+            .hero-description {
+
+                font-size:
+                    13px;
+
+                line-height:
+                    1.65;
+            }
+
+
+            .hero-mini {
+
+                gap:
+                    11px;
+
+                font-size:
+                    8px;
+
+                flex-wrap:
+                    wrap;
+            }
+
+
+            .sos-wrap {
+
+                margin-top:
+                    -65px;
+
+                padding:
+                    0 12px;
+            }
+
+
+            .sos-panel {
+
+                border-radius:
+                    23px;
+            }
+
+
+            .sos-left {
+
+                min-height:
+                    315px;
+
+                padding:
+                    29px 20px;
+            }
+
+
+            .sos-button {
+
+                width:
+                    166px;
+
+                height:
+                    166px;
+
+                border-width:
+                    10px;
+
+                font-size:
+                    29px;
+            }
+
+
+            .sos-left h2 {
+
+                font-size:
+                    19px;
+            }
+
+
+            .quick-side {
+
+                padding:
+                    23px 15px;
+            }
+
+
+            .quick-grid {
+
+                gap:
+                    8px;
+            }
+
+
+            .quick-card {
+
+                min-height:
+                    98px;
+
+                padding:
+                    13px;
+            }
+
+
+            .quick-icon {
+
+                width:
+                    34px;
+
+                height:
+                    34px;
+
+                font-size:
+                    16px;
+            }
+
+
+            .quick-card h4 {
+
+                font-size:
+                    10px;
+            }
+
+
+            .quick-card p {
+
+                font-size:
+                    8px;
+            }
+
+
+            .trust-strip {
+
+                padding:
+                    0 12px;
+            }
+
+
+            .trust-grid {
+
+                grid-template-columns:
+                    1fr;
+
+                gap:
+                    7px;
+            }
+
+
+            .trust {
+
+                min-height:
+                    59px;
+            }
+
+
+            .section {
+
+                margin-top:
+                    55px;
+
+                padding:
+                    0 12px;
+            }
+
+
+            .section-heading {
+
+                display:
+                    block;
+            }
+
+
+            .section-heading h2 {
+
+                font-size:
+                    24px;
+            }
+
+
+            .section-heading p {
+
+                text-align:
+                    left;
+
+                margin-top:
+                    6px;
+
+                font-size:
+                    10px;
+            }
+
+
+            .services {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+                gap:
+                    8px;
+            }
+
+
+            .service-card {
+
+                min-height:
+                    178px;
+
+                padding:
+                    16px;
+            }
+
+
+            .service-icon {
+
+                width:
+                    43px;
+
+                height:
+                    43px;
+
+                border-radius:
+                    12px;
+
+                font-size:
+                    21px;
+
+                margin-bottom:
+                    15px;
+            }
+
+
+            .service-card h3 {
+
+                font-size:
+                    12px;
+            }
+
+
+            .service-card p {
+
+                font-size:
+                    9px;
+            }
+
+
+            .service-link {
+
+                left:
+                    16px;
+
+                bottom:
+                    15px;
+
+                font-size:
+                    8px;
+            }
+
+
+            .safety-section {
+
+                padding:
+                    0 12px;
+
+                margin:
+                    50px auto;
+            }
+
+
+            .safety-box {
+
+                padding:
+                    27px 22px;
+
+                min-height:
+                    250px;
+
+                border-radius:
+                    22px;
+            }
+
+
+            .safety-box h2 {
+
+                font-size:
+                    24px;
+            }
+
+
+            .safety-box p {
+
+                font-size:
+                    10px;
+            }
+
+
+            .safety-action {
+
+                width:
+                    100%;
+
+                min-width:
+                    0;
+            }
+
+
+            .steps {
+
+                grid-template-columns:
+                    1fr;
+
+                gap:
+                    9px;
+            }
+
+
+            .step {
+
+                padding:
+                    18px;
+            }
+
+
+            .step-number {
+
+                width:
+                    34px;
+
+                height:
+                    34px;
+
+                margin-bottom:
+                    12px;
+            }
+
+
+            .step h3 {
+
+                font-size:
+                    12px;
+            }
+
+
+            .step p {
+
+                font-size:
+                    9px;
+            }
+
+
+            .cta {
+
+                padding:
+                    0 12px;
+
+                margin:
+                    50px auto;
+            }
+
+
+            .cta-inner {
+
+                padding:
+                    24px 19px;
+
+                display:
+                    block;
+
+                border-radius:
+                    19px;
+            }
+
+
+            .cta-inner h2 {
+
+                font-size:
+                    19px;
+            }
+
+
+            .cta-inner p {
+
+                margin-bottom:
+                    16px;
+            }
+
+
+            .cta-btn {
+
+                display:
+                    inline-block;
+
+                width:
+                    100%;
+
+                text-align:
+                    center;
+            }
+
+
+            footer {
+
+                padding:
+                    40px 20px 25px;
+            }
+
+
+            .mobile-nav {
+
+                display:
+                    grid;
+
+                grid-template-columns:
+                    repeat(4,1fr);
+
+                position:
+                    fixed;
+
+                bottom:
+                    0;
+
+                left:
+                    0;
+
+                right:
+                    0;
+
+                height:
+                    68px;
+
+                z-index:
+                    3000;
+
+                background:
+                    rgba(255,255,255,.97);
+
+                backdrop-filter:
+                    blur(18px);
+
+                -webkit-backdrop-filter:
+                    blur(18px);
+
+                border-top:
+                    1px solid
+                    #e4e7ec;
+
+                box-shadow:
+                    0 -10px 30px
+                    rgba(16,24,40,.10);
+            }
+
+
+            .mobile-nav a {
+
+                display:
+                    flex;
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    center;
+
+                justify-content:
+                    center;
+
+                gap:
+                    3px;
+
+                color:
+                    #667085;
+
+                font-size:
+                    8px;
+
+                font-weight:
+                    850;
+            }
+
+
+            .mobile-nav a span {
+
+                font-size:
+                    19px;
+            }
+
+
+            .mobile-nav .sos-mobile {
+
+                color:
+                    #ef233c;
+            }
+
+
+            .emergency-types {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .modal {
+
+                align-items:
+                    flex-end;
+
+                padding:
+                    0;
+            }
+
+
+            .modal-box {
+
+                width:
+                    100%;
+
+                max-height:
+                    94vh;
+
+                padding:
+                    25px 16px;
+
+                border-radius:
+                    23px 23px 0 0;
+            }
+
+
+            .modal-title {
+
+                font-size:
+                    21px;
+            }
+
+        }
+
+
+        /* =========================================================
+           SMALL PHONES
+        ========================================================= */
+
+        @media(max-width:380px) {
+
+            .hero h1 {
+
+                font-size:
+                    37px;
+            }
+
+
+            .services {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .quick-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .quick-card {
+
+                min-height:
+                    85px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar">
+
+    <a href="/home" class="brand">
+
+        <div class="brand-logo">
+            🚨
+        </div>
+
+        <div class="brand-text">
+
+            <strong>
+                Emergency Assistance
+            </strong>
+
+            <span>
+                SMART RESPONSE SYSTEM
+            </span>
+
+        </div>
+
+    </a>
+
+
+    <div class="desktop-nav">
+
+        <a href="/home">
+            Home
+        </a>
+
+        <a href="/report"
+           class="nav-report">
+            Report Emergency
+        </a>
+
+        <a href="/dashboard">
+            My Reports
+        </a>
+
+        <a href="/login">
+            Admin / Responder
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="status-pill">
+
+            <span class="live-dot"></span>
+
+            SYSTEM ONLINE
+
+            •
+
+            EMERGENCY RESPONSE READY
+
+        </div>
+
+
+        <h1>
+
+            Help is only
+            <span class="highlight">
+                one tap away.
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Report emergencies quickly, share your
+            location and connect with the appropriate
+            emergency responders through one simple
+            platform.
+
+        </p>
+
+
+        <div class="hero-mini">
+
+            <span>
+                ✓ Fast reporting
+            </span>
+
+            <span>
+                ✓ Location support
+            </span>
+
+            <span>
+                ✓ Responder assignment
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SOS PANEL
+========================================================= -->
+
+<section class="sos-wrap">
+
+    <div class="sos-panel">
+
+
+        <!-- SOS -->
+
+        <div class="sos-left">
+
+            <div class="sos-small">
+                EMERGENCY? ACT NOW
+            </div>
+
+
+            <button
+                class="sos-button"
+                onclick="openSOS()">
+
+                SOS
+
+            </button>
+
+
+            <h2>
+                Send Emergency Alert
+            </h2>
+
+
+            <p>
+                Tap SOS to start an emergency report.
+            </p>
+
+        </div>
+
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="quick-side">
+
+            <div class="quick-top">
+
+                <h3>
+                    Quick Actions
+                </h3>
+
+                <span>
+                    CHOOSE AN ACTION
+                </span>
+
+            </div>
+
+
+            <div class="quick-grid">
+
+
+                <a
+                    href="/report"
+                    class="quick-card">
+
+                    <div class="quick-icon">
+                        📝
+                    </div>
+
+                    <h4>
+                        Report Emergency
+                    </h4>
+
+                    <p>
+                        Submit complete emergency details.
+                    </p>
+
+                </a>
+
+
+                <a
+                    href="/dashboard"
+                    class="quick-card">
+
+                    <div class="quick-icon">
+                        📋
+                    </div>
+
+                    <h4>
+                        My Reports
+                    </h4>
+
+                    <p>
+                        Track your emergency reports.
+                    </p>
+
+                </a>
+
+
+                <a
+                    href="/login"
+                    class="quick-card">
+
+                    <div class="quick-icon">
+                        🛡️
+                    </div>
+
+                    <h4>
+                        Admin
+                    </h4>
+
+                    <p>
+                        Manage emergencies and responders.
+                    </p>
+
+                </a>
+
+
+                <a
+                    href="/login"
+                    class="quick-card">
+
+                    <div class="quick-icon">
+                        🚑
+                    </div>
+
+                    <h4>
+                        Responder
+                    </h4>
+
+                    <p>
+                        View and manage assignments.
+                    </p>
+
+                </a>
+
+
+                <a
+                    href="javascript:void(0)"
+                    onclick="openWomenSafety()"
+                    class="quick-card women-quick">
+
+                    <div class="quick-icon">
+                        🛡️
+                    </div>
+
+                    <h4>
+                        Women Safety
+                    </h4>
+
+                    <p>
+                        Send a quick Police safety alert.
+                    </p>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     TRUST STRIP
+========================================================= -->
+
+<section class="trust-strip">
+
+    <div class="trust-grid">
+
+
+        <div class="trust">
+
+            <div class="trust-icon">
+                📍
+            </div>
+
+            <div>
+
+                <strong>
+                    Location Ready
+                </strong>
+
+                <span>
+                    GPS support for emergency reports
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="trust">
+
+            <div class="trust-icon">
+                🚑
+            </div>
+
+            <div>
+
+                <strong>
+                    Smart Dispatch
+                </strong>
+
+                <span>
+                    Suitable responders can be assigned
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="trust">
+
+            <div class="trust-icon">
+                🔒
+            </div>
+
+            <div>
+
+                <strong>
+                    Organized Records
+                </strong>
+
+                <span>
+                    Emergency history and status tracking
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SERVICES
+========================================================= -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <div class="eyebrow">
+                EMERGENCY SERVICES
+            </div>
+
+            <h2>
+                Get the right help.
+            </h2>
+
+        </div>
+
+        <p>
+            Select the appropriate emergency category
+            when reporting an incident.
+        </p>
+
+    </div>
+
+
+    <div class="services">
+
+
+        <div class="service-card">
+
+            <span class="service-number">
+                01
+            </span>
+
+            <div class="service-icon accident-icon">
+                🚗
+            </div>
+
+            <h3>
+                Accident
+            </h3>
+
+            <p>
+                Report road accidents and request
+                emergency assistance.
+            </p>
+
+            <div class="service-link">
+                Emergency report
+                <span>→</span>
+            </div>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <span class="service-number">
+                02
+            </span>
+
+            <div class="service-icon fire-icon">
+                🔥
+            </div>
+
+            <h3>
+                Fire
+            </h3>
+
+            <p>
+                Quickly report fire incidents and
+                request fire response.
+            </p>
+
+            <div class="service-link">
+                Emergency report
+                <span>→</span>
+            </div>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <span class="service-number">
+                03
+            </span>
+
+            <div class="service-icon medical-icon">
+                🏥
+            </div>
+
+            <h3>
+                Medical
+            </h3>
+
+            <p>
+                Request medical or ambulance assistance
+                during emergencies.
+            </p>
+
+            <div class="service-link">
+                Emergency report
+                <span>→</span>
+            </div>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <span class="service-number">
+                04
+            </span>
+
+            <div class="service-icon police-icon">
+                👮
+            </div>
+
+            <h3>
+                Police
+            </h3>
+
+            <p>
+                Report incidents requiring police
+                assistance and protection.
+            </p>
+
+            <div class="service-link">
+                Emergency report
+                <span>→</span>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     WOMEN SAFETY
+========================================================= -->
+
+<section class="safety-section">
+
+    <div class="safety-box">
+
+        <div class="safety-circle"></div>
+
+
+        <div class="safety-content">
+
+            <div class="safety-tag">
+                SPECIAL PROTECTION
+            </div>
+
+
+            <h2>
+                🛡️ Women Safety
+            </h2>
+
+
+            <p>
+
+                Feeling unsafe or facing a threatening
+                situation? Send a quick safety alert.
+                Women Safety emergencies are routed
+                specifically toward available Police
+                responders.
+
+            </p>
+
+        </div>
+
+
+        <button
+            class="safety-action"
+            onclick="openWomenSafety()">
+
+            SEND SAFETY ALERT
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     HOW IT WORKS
+========================================================= -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <div class="eyebrow">
+                SIMPLE PROCESS
+            </div>
+
+            <h2>
+                Help in three steps.
+            </h2>
+
+        </div>
+
+        <p>
+            Designed to keep emergency reporting
+            simple, clear and quick.
+        </p>
+
+    </div>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <h3>
+                Report
+            </h3>
+
+            <p>
+                Tap SOS or submit an emergency report
+                with the information available to you.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <h3>
+                Locate
+            </h3>
+
+            <p>
+                Your location can be captured through
+                your device when location access is available.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <h3>
+                Respond
+            </h3>
+
+            <p>
+                Suitable available responders can be
+                assigned and the emergency status tracked.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="cta">
+
+    <div class="cta-inner">
+
+        <div>
+
+            <h2>
+                Need emergency assistance?
+            </h2>
+
+            <p>
+                Don't wait. Create an emergency report now.
+            </p>
+
+        </div>
+
+
+        <a
+            href="/report"
+            class="cta-btn">
+
+            REPORT EMERGENCY →
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        🚨 Emergency Assistance
+    </div>
+
+
+    <p>
+        Emergency Assistance Management System
+    </p>
+
+
+    <div class="footer-line"></div>
+
+
+    <div class="copyright">
+        © 2026 Emergency Assistance • Smart Emergency Response Platform
+    </div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     MOBILE NAVIGATION
+========================================================= -->
+
+<div class="mobile-nav">
+
+
+    <a href="/home">
+
+        <span>
+            🏠
+        </span>
+
+        Home
+
+    </a>
+
+
+    <a href="/report">
+
+        <span>
+            📝
+        </span>
+
+        Report
+
+    </a>
+
+
+    <a
+        href="javascript:void(0)"
+        onclick="openSOS()"
+        class="sos-mobile">
+
+        <span>
+            🚨
+        </span>
+
+        SOS
+
+    </a>
+
+
+    <a href="/dashboard">
+
+        <span>
+            📋
+        </span>
+
+        Reports
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     SOS MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="sosModal">
+
+    <div class="modal-box">
+
+
+        <button
+            class="close-btn"
+            onclick="closeSOS()">
+
+            ×
+
+        </button>
+
+
+        <div class="modal-title">
+            Send Emergency Alert
+        </div>
+
+
+        <p class="modal-description">
+
+            Select the emergency type below.
+            Your device location will be captured
+            when available.
+
+        </p>
+
+
+        <div class="emergency-types">
+
+
+            <label class="type-option">
+
+                <input
+                    type="radio"
+                    name="emergency_type"
+                    value="Accident"
+                    checked>
+
+                🚗 Accident
+
+            </label>
+
+
+            <label class="type-option">
+
+                <input
+                    type="radio"
+                    name="emergency_type"
+                    value="Fire">
+
+                🔥 Fire
+
+            </label>
+
+
+            <label class="type-option">
+
+                <input
+                    type="radio"
+                    name="emergency_type"
+                    value="Medical">
+
+                🏥 Medical
+
+            </label>
+
+
+            <label class="type-option">
+
+                <input
+                    type="radio"
+                    name="emergency_type"
+                    value="Police">
+
+                👮 Police
+
+            </label>
+
+
+            <label class="type-option">
+
+                <input
+                    type="radio"
+                    name="emergency_type"
+                    value="Women Safety">
+
+                🛡️ Women Safety
+
+            </label>
+
+
+            <label class="type-option">
+
+                <input
+                    type="radio"
+                    name="emergency_type"
+                    value="Other">
+
+                🆘 Other
+
+            </label>
+
+        </div>
+
+
+        <!-- WOMEN SAFETY REASON -->
+
+        <div
+            class="safety-reason"
+            id="safetyReasonBox">
+
+            <textarea
+                id="safetyReason"
+                placeholder="Briefly describe why you need help (optional)..."></textarea>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="location-box">
+
+            <div
+                class="location-title"
+                id="locationStatus">
+
+                📍 Getting your location...
+
+            </div>
+
+
+            <div
+                class="location-detail"
+                id="locationDetail">
+
+                Please allow location access in your browser.
+
+            </div>
+
+        </div>
+
+
+        <input
+            type="hidden"
+            id="latitude">
+
+
+        <input
+            type="hidden"
+            id="longitude">
+
+
+        <button
+            class="send-button"
+            id="sendButton"
+            onclick="sendSOS()"
+            disabled>
+
+            SEND SOS NOW
+
+        </button>
+
+
+        <!-- RESULT -->
+
+        <div
+            class="result"
+            id="resultBox">
+
+
+            <h3>
+                ✅ Emergency alert sent successfully
+            </h3>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Emergency ID
+                </span>
+
+                <span
+                    class="value"
+                    id="resultId">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Emergency Type
+                </span>
+
+                <span
+                    class="value"
+                    id="resultType">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Status
+                </span>
+
+                <span
+                    class="value"
+                    id="resultStatus">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Primary Responder
+                </span>
+
+                <span
+                    class="value"
+                    id="resultResponder">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Department
+                </span>
+
+                <span
+                    class="value"
+                    id="resultDepartment">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Phone
+                </span>
+
+                <span
+                    class="value"
+                    id="resultPhone">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Distance
+                </span>
+
+                <span
+                    class="value"
+                    id="resultDistance">
+                    -
+                </span>
+
+            </div>
+
+
+            <div
+                id="allResponders"
+                style="margin-top:14px">
+            </div>
+
+
+            <div class="result-actions">
+
+                <a
+                    href="/dashboard"
+                    class="reports">
+
+                    View My Reports
+
+                </a>
+
+
+                <button
+                    class="secondary"
+                    onclick="closeSOS()">
+
+                    Close
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+let locationReady = false;
+
+let sending = false;
+
+
+/* =========================================================
+   OPEN SOS
+========================================================= */
+
+function openSOS() {
+
+    document
+        .getElementById("sosModal")
+        .classList
+        .add("active");
+
+    document.body.classList.add("modal-open");
+
+    resetSOS();
+
+    getSOSLocation();
+
+}
+
+
+/* =========================================================
+   WOMEN SAFETY
+========================================================= */
+
+function openWomenSafety() {
+
+    document
+        .getElementById("sosModal")
+        .classList
+        .add("active");
+
+    document.body.classList.add("modal-open");
+
+    resetSOS();
+
+
+    const radio =
+        document.querySelector(
+            'input[name="emergency_type"][value="Women Safety"]'
+        );
+
+
+    if (radio) {
+
+        radio.checked = true;
+
+    }
+
+
+    document
+        .getElementById("safetyReasonBox")
+        .style.display = "block";
+
+
+    getSOSLocation();
+
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+function closeSOS() {
+
+    document
+        .getElementById("sosModal")
+        .classList
+        .remove("active");
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetSOS() {
+
+    locationReady = false;
+
+    sending = false;
+
+
+    document
+        .getElementById("latitude")
+        .value = "";
+
+
+    document
+        .getElementById("longitude")
+        .value = "";
+
+
+    document
+        .getElementById("locationStatus")
+        .textContent =
+        "📍 Getting your location...";
+
+
+    document
+        .getElementById("locationDetail")
+        .textContent =
+        "Please allow location access in your browser.";
+
+
+    document
+        .getElementById("sendButton")
+        .disabled = true;
+
+
+    document
+        .getElementById("sendButton")
+        .textContent =
+        "SEND SOS NOW";
+
+
+    document
+        .getElementById("resultBox")
+        .classList
+        .remove("show");
+
+
+    document
+        .getElementById("safetyReasonBox")
+        .style.display = "none";
+
+
+    document
+        .getElementById("safetyReason")
+        .value = "";
+
+}
+
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+function getSOSLocation() {
+
+    if (!navigator.geolocation) {
+
+        document
+            .getElementById("locationStatus")
+            .textContent =
+            "⚠️ Location unavailable";
+
+
+        document
+            .getElementById("locationDetail")
+            .textContent =
+            "Your browser does not support GPS. You can still send SOS.";
+
+
+        document
+            .getElementById("sendButton")
+            .disabled = false;
+
+        return;
+
+    }
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const lat =
+                position.coords.latitude;
+
+            const lon =
+                position.coords.longitude;
+
+
+            document
+                .getElementById("latitude")
+                .value = lat;
+
+
+            document
+                .getElementById("longitude")
+                .value = lon;
+
+
+            locationReady = true;
+
+
+            document
+                .getElementById("locationStatus")
+                .textContent =
+                "✅ Location captured";
+
+
+            document
+                .getElementById("locationDetail")
+                .textContent =
+                lat.toFixed(6)
+                + ", "
+                + lon.toFixed(6);
+
+
+            document
+                .getElementById("sendButton")
+                .disabled = false;
+
+        },
+
+
+        function() {
+
+            document
+                .getElementById("locationStatus")
+                .textContent =
+                "⚠️ Location unavailable";
+
+
+            document
+                .getElementById("locationDetail")
+                .textContent =
+                "Permission was denied or GPS could not be read. You can still send SOS.";
+
+
+            document
+                .getElementById("sendButton")
+                .disabled = false;
+
+        },
+
+
+        {
+            enableHighAccuracy:
+                true,
+
+            timeout:
+                10000,
+
+            maximumAge:
+                0
+        }
+
+    );
+
+}
+
+
+/* =========================================================
+   EMERGENCY TYPE CHANGE
+========================================================= */
+
+document
+    .querySelectorAll(
+        'input[name="emergency_type"]'
+    )
+    .forEach(function(radio) {
+
+        radio.addEventListener(
+            "change",
+            function() {
+
+                document
+                    .getElementById(
+                        "safetyReasonBox"
+                    )
+                    .style.display =
+                    this.value ===
+                    "Women Safety"
+                        ? "block"
+                        : "none";
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   SEND SOS
+========================================================= */
+
+async function sendSOS() {
+
+    if (sending) {
+
+        return;
+
+    }
+
+
+    sending = true;
+
+
+    const button =
+        document.getElementById(
+            "sendButton"
+        );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "SENDING SOS...";
+
+
+    const selected =
+        document.querySelector(
+            'input[name="emergency_type"]:checked'
+        );
+
+
+    if (!selected) {
+
+        sending = false;
+
+        button.disabled = false;
+
+        button.textContent =
+            "SEND SOS NOW";
+
+        return;
+
+    }
+
+
+    const type =
+        selected.value;
+
+
+    const form =
+        new FormData();
+
+
+    form.append(
+        "emergency_type",
+        type
+    );
+
+
+    form.append(
+        "latitude",
+        document.getElementById(
+            "latitude"
+        ).value
+    );
+
+
+    form.append(
+        "longitude",
+        document.getElementById(
+            "longitude"
+        ).value
+    );
+
+
+    if (type === "Women Safety") {
+
+        form.append(
+            "reason",
+            document.getElementById(
+                "safetyReason"
+            ).value
+        );
+
+    }
+
+
+    try {
+
+        const endpoint =
+            type === "Women Safety"
+                ? "/women-safety"
+                : "/sos";
+
+
+        const response =
+            await fetch(
+                endpoint,
+                {
+                    method:
+                        "POST",
+
+                    body:
+                        form,
+
+                    headers: {
+                        "X-Requested-With":
+                            "XMLHttpRequest"
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to send emergency alert."
+            );
+
+        }
+
+
+        document
+            .getElementById("resultId")
+            .textContent =
+            data.emergency_id || "-";
+
+
+        document
+            .getElementById("resultType")
+            .textContent =
+            data.emergency_type || type;
+
+
+        document
+            .getElementById("resultStatus")
+            .textContent =
+            data.status || "Reported";
+
+
+        document
+            .getElementById("resultResponder")
+            .textContent =
+            data.responder_name ||
+            "No responder available";
+
+
+        document
+            .getElementById("resultDepartment")
+            .textContent =
+            data.responder_department ||
+            "-";
+
+
+        document
+            .getElementById("resultPhone")
+            .textContent =
+            data.responder_phone ||
+            "-";
+
+
+        document
+            .getElementById("resultDistance")
+            .textContent =
+            data.distance_km !== null &&
+            data.distance_km !== undefined
+                ? data.distance_km + " km"
+                : "-";
+
+
+        const list =
+            document.getElementById(
+                "allResponders"
+            );
+
+
+        const responders =
+            data.responders || [];
+
+
+        if (responders.length) {
+
+            list.innerHTML =
+
+                "<div style='font-weight:850;font-size:11px;margin-bottom:7px'>🚑 Responders Dispatched</div>" +
+
+                responders
+                    .map(function(r, i) {
+
+                        const distance =
+                            r.distance_km !== null &&
+                            r.distance_km !== undefined
+                                ? r.distance_km + " km"
+                                : "Distance unavailable";
+
+
+                        return `
+
+                        <div style="
+                            background:#ffffff;
+                            border:1px solid #e4e7ec;
+                            border-radius:10px;
+                            padding:10px;
+                            margin-top:7px;
+                            font-size:10px;
+                        ">
+
+                            <b>
+                                ${i + 1}.
+                                ${r.name || "-"}
+                            </b>
+
+                            <br>
+
+                            <span style="color:#667085">
+
+                                ${r.department || "-"}
+
+                                •
+
+                                ${r.phone || "-"}
+
+                                •
+
+                                ${distance}
+
+                            </span>
+
+                        </div>
+
+                        `;
+
+                    })
+                    .join("");
+
+        }
+
+
+        document
+            .getElementById("resultBox")
+            .classList
+            .add("show");
+
+
+        button.textContent =
+            "SOS SENT ✓";
+
+
+    } catch(error) {
+
+        document
+            .getElementById("locationStatus")
+            .textContent =
+            "❌ Alert could not be sent";
+
+
+        document
+            .getElementById("locationDetail")
+            .textContent =
+            error.message;
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "TRY AGAIN";
+
+
+        sending = false;
+
+    }
+
+}
+
+
+/* =========================================================
+   CLICK OUTSIDE MODAL
+========================================================= */
+
+document
+    .getElementById("sosModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeSOS();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeSOS();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | Emergency Assist</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            background: #f1f5f9;
+        }
+
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0f2fe 0%,
+                    #f8fafc 45%,
+                    #fee2e2 100%
+                );
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 1050px;
+            min-height: 620px;
+            display: grid;
+            grid-template-columns: 45% 55%;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(15, 23, 42, 0.18);
+        }
+
+        /* LEFT */
+
+        .auth-left {
+            padding: 60px 50px;
+            color: white;
+            background: linear-gradient(
+                145deg,
+                #0f172a,
+                #1e293b
+            );
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-logo {
+            width: 75px;
+            height: 75px;
+            border-radius: 20px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 40px;
+            margin-bottom: 25px;
+        }
+
+        .auth-left h1 {
+            font-size: 45px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .auth-left p {
+            color: #cbd5e1;
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .auth-features {
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+        }
+
+        .auth-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e2e8f0;
+            font-size: 15px;
+        }
+
+        .auth-feature span:first-child {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #dc2626;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+        /* RIGHT */
+
+        .auth-right {
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-right h2 {
+            font-size: 34px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            color: #64748b;
+            margin-bottom: 28px;
+            font-size: 15px;
+        }
+
+        /* FORM */
+
+        .auth-form {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+
+            background: white;
+            color: #111827;
+
+            font-size: 15px;
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        /* BUTTON */
+
+        .auth-button {
+            width: 100%;
+            height: 50px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: #dc2626;
+            color: white;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            cursor: pointer;
+            margin-top: 5px;
+
+            transition: 0.2s;
+        }
+
+        .auth-button:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+        }
+
+        /* LINK */
+
+        .auth-link {
+            text-align: center;
+            margin-top: 22px;
+
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .auth-link a {
+            color: #2563eb;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* FLASH */
+
+        .flash-container {
+            margin-bottom: 18px;
+        }
+
+        .flash {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .flash.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .flash.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .flash.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .flash.info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
+
+            .auth-container {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+
+            .auth-left {
+                padding: 40px;
+            }
+
+            .auth-left h1 {
+                font-size: 36px;
+            }
+
+            .auth-right {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .auth-page {
+                padding: 10px;
+            }
+
+            .auth-left,
+            .auth-right {
+                padding: 30px 22px;
+            }
+
+            .auth-left h1 {
+                font-size: 30px;
+            }
+
+            .auth-right h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="auth-page">
+
+    <div class="auth-container">
+
+        <!-- LEFT PANEL -->
+        <div class="auth-left">
+
+            <div class="auth-logo">
+                🚨
+            </div>
+
+            <h1>
+                Emergency<br>
+                Assistance
+            </h1>
+
+            <p>
+                Create your account to report and track
+                emergency situations quickly and securely.
+            </p>
+
+            <div class="auth-features">
+
+                <div class="auth-feature">
+                    <span>✓</span>
+                    <span>Fast emergency reporting</span>
+                </div>
+
+                <div class="auth-feature">
+                    <span>✓</span>
+                    <span>Track your emergency reports</span>
+                </div>
+
+                <div class="auth-feature">
+                    <span>✓</span>
+                    <span>View emergency status</span>
+                </div>
+
+                <div class="auth-feature">
+                    <span>✓</span>
+                    <span>Secure user account</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="auth-right">
+
+            <h2>Create Account</h2>
+
+            <p class="auth-subtitle">
+                Register for the Emergency Assistance System.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    <div class="flash-container">
+
+                        {% for category, message in messages %}
+
+                            <div class="flash {{ category }}">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+            <form
+                method="POST"
+                action="{{ url_for('register') }}"
+                class="auth-form"
+            >
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                        autocomplete="name"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                        autocomplete="email"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        required
+                        minlength="6"
+                        autocomplete="new-password"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Confirm your password"
+                        required
+                        minlength="6"
+                        autocomplete="new-password"
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="auth-button"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+            <div class="auth-link">
+
+                Already have an account?
+
+                <a href="{{ url_for('login') }}">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector(".auth-form").addEventListener(
+    "submit",
+    function(event) {
+
+        const password =
+            document.getElementById("password").value;
+
+        const confirmPassword =
+            document.getElementById("confirm_password").value;
+
+        if (password !== confirmPassword) {
+
+            event.preventDefault();
+
+            alert("Passwords do not match.");
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

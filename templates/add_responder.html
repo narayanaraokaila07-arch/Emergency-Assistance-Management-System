@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    {% if edit_mode %}
+        Edit Responder
+    {% else %}
+        Add Responder
+    {% endif %}
+</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f8fafc
+        );
+    color: #172033;
+}
+
+.navbar {
+    background: #101827;
+    color: white;
+    padding: 18px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+    padding: 9px 14px;
+    border-radius: 9px;
+}
+
+.navbar a:hover {
+    background: #263247;
+}
+
+.container {
+    max-width: 800px;
+    margin: 45px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 22px;
+    padding: 32px;
+    box-shadow:
+        0 20px 50px
+        rgba(15, 23, 42, 0.10);
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.title .icon {
+    font-size: 48px;
+}
+
+.title h1 {
+    margin: 10px 0 5px;
+    font-size: 30px;
+}
+
+.title p {
+    color: #667085;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-weight: 700;
+    margin-bottom: 7px;
+    font-size: 14px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d0d5dd;
+    border-radius: 11px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #4f46e5;
+    box-shadow:
+        0 0 0 3px
+        rgba(79, 70, 229, 0.12);
+}
+
+.location-box {
+    background: #f8fafc;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 20px;
+}
+
+.location-box h3 {
+    margin-top: 0;
+}
+
+.location-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+button,
+.button {
+    border: none;
+    padding: 13px 20px;
+    border-radius: 11px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.primary {
+    background: #4f46e5;
+    color: white;
+}
+
+.primary:hover {
+    background: #4338ca;
+}
+
+.secondary {
+    background: #e5e7eb;
+    color: #172033;
+}
+
+.secondary:hover {
+    background: #d1d5db;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.flash {
+    padding: 13px 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.note {
+    margin-top: 20px;
+    background: #eff6ff;
+    border-radius: 12px;
+    padding: 15px;
+    color: #1e40af;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (
+    max-width: 700px
+) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions button,
+    .actions a {
+        width: 100%;
+        text-align: center;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="brand">
+        🚑 Emergency Assistance
+    </div>
+
+    <div>
+
+        <a href="{{ url_for('responders') }}">
+            Responders
+        </a>
+
+        <a href="{{ url_for('admin') }}">
+            Admin
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+<div class="card">
+
+
+<div class="title">
+
+    <div class="icon">
+
+        {% if edit_mode %}
+            ✏️
+        {% else %}
+            🚑
+        {% endif %}
+
+    </div>
+
+    <h1>
+
+        {% if edit_mode %}
+            Edit Responder
+        {% else %}
+            Add Responder
+        {% endif %}
+
+    </h1>
+
+    <p>
+
+        {% if edit_mode %}
+            Update the responder's information.
+        {% else %}
+            Add a new emergency responder.
+        {% endif %}
+
+    </p>
+
+</div>
+
+
+{% with messages =
+    get_flashed_messages(
+        with_categories=true
+    )
+%}
+
+    {% for category, message in messages %}
+
+        <div class="flash">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+{% endwith %}
+
+
+<form
+    method="POST"
+    action="{% if edit_mode %}
+                {{ url_for(
+                    'edit_responder',
+                    responder_id=responder['id']
+                ) }}
+            {% else %}
+                {{ url_for('add_responder') }}
+            {% endif %}"
+>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+    <label>
+        Responder Name
+    </label>
+
+    <input
+        type="text"
+        name="name"
+        required
+        value="{{ responder['name'] if responder else '' }}"
+        placeholder="Enter responder name"
+    >
+
+</div>
+
+
+<div class="form-group">
+
+    <label>
+        Department
+    </label>
+
+    <input
+        type="text"
+        name="department"
+        required
+        value="{{ responder['department'] if responder else '' }}"
+        placeholder="Police / Ambulance / Fire"
+    >
+
+</div>
+
+
+<div class="form-group">
+
+    <label>
+        Phone Number
+    </label>
+
+    <input
+        type="tel"
+        name="phone"
+        required
+        value="{{ responder['phone'] if responder else '' }}"
+        placeholder="Responder phone"
+    >
+
+</div>
+
+
+<div class="form-group">
+
+    <label>
+        Status
+    </label>
+
+    <select name="status">
+
+        {% set current_status =
+            responder['status']
+            if responder
+            else 'Available'
+        %}
+
+        <option
+            value="Available"
+            {% if current_status == 'Available' %}
+                selected
+            {% endif %}
+        >
+            Available
+        </option>
+
+        <option
+            value="Busy"
+            {% if current_status == 'Busy' %}
+                selected
+            {% endif %}
+        >
+            Busy
+        </option>
+
+        <option
+            value="Offline"
+            {% if current_status == 'Offline' %}
+                selected
+            {% endif %}
+        >
+            Offline
+        </option>
+
+    </select>
+
+</div>
+
+
+<div class="form-group">
+
+    <label>
+        Login Username
+    </label>
+
+    <input
+        type="text"
+        name="login_username"
+        value="{{ responder['login_username'] if responder else '' }}"
+        placeholder="Responder login username"
+    >
+
+</div>
+
+
+<div class="form-group">
+
+    <label>
+
+        {% if edit_mode %}
+            New Password
+        {% else %}
+            Login Password
+        {% endif %}
+
+    </label>
+
+    <input
+        type="password"
+        name="login_password"
+        placeholder="{% if edit_mode %}Leave blank to keep current password{% else %}Responder login password{% endif %}"
+    >
+
+</div>
+
+
+</div>
+
+
+<div class="location-box">
+
+    <h3>
+        📍 Responder Location
+    </h3>
+
+    <p>
+        Enter the responder's current base/location.
+        This is used to automatically find the nearest
+        responder during SOS.
+    </p>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group">
+
+            <label>
+                Latitude
+            </label>
+
+            <input
+                type="number"
+                step="any"
+                name="latitude"
+                id="latitude"
+                value="{{ responder['latitude'] if responder else '' }}"
+                placeholder="Example: 13.0827"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Longitude
+            </label>
+
+            <input
+                type="number"
+                step="any"
+                name="longitude"
+                id="longitude"
+                value="{{ responder['longitude'] if responder else '' }}"
+                placeholder="Example: 80.2707"
+            >
+
+        </div>
+
+
+    </div>
+
+
+    <div class="location-buttons">
+
+        <button
+            type="button"
+            class="secondary"
+            onclick="getLocation()"
+        >
+            📍 Use Current Location
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="note">
+
+    <strong>
+        Automatic Assignment:
+    </strong>
+
+    When an SOS or emergency is reported,
+    the system checks available responders,
+    matches the emergency type with the responder
+    department, calculates distance, and automatically
+    assigns the nearest suitable responder.
+
+</div>
+
+
+<div class="actions">
+
+    <button
+        type="submit"
+        class="primary"
+    >
+
+        {% if edit_mode %}
+            💾 Update Responder
+        {% else %}
+            ➕ Add Responder
+        {% endif %}
+
+    </button>
+
+
+    <a
+        href="{{ url_for('responders') }}"
+        class="button secondary"
+    >
+        Cancel
+    </a>
+
+</div>
+
+
+</form>
+
+
+</div>
+
+
+</main>
+
+
+<script>
+
+function getLocation() {
+
+    if (!navigator.geolocation) {
+
+        alert(
+            "Geolocation is not supported by this browser."
+        );
+
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            document.getElementById(
+                "latitude"
+            ).value =
+                position.coords.latitude.toFixed(6);
+
+            document.getElementById(
+                "longitude"
+            ).value =
+                position.coords.longitude.toFixed(6);
+
+        },
+
+        function(error) {
+
+            alert(
+                "Could not get your location. " +
+                "Please enter latitude and longitude manually."
+            );
+
+        }
+
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>

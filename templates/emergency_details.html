@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Emergency #{{ emergency.id }}</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6fa;
+    color: #172033;
+}
+
+nav {
+    background: #111827;
+    color: white;
+    padding: 16px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.container {
+    max-width: 1050px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.07);
+}
+
+.success {
+    background: #ecfdf3;
+    border: 1px solid #86efac;
+}
+
+.assigned {
+    background: linear-gradient(135deg,#eff6ff,#ffffff);
+    border: 2px solid #60a5fa;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+.status {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 30px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+}
+
+.info {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.label {
+    color: #667085;
+    font-size: 13px;
+}
+
+.value {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.contact-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.call {
+    background: #16a34a;
+}
+
+.map {
+    background: #2563eb;
+}
+
+.back {
+    background: #475569;
+}
+
+.timeline {
+    border-left: 3px solid #2563eb;
+    padding-left: 18px;
+}
+
+.history-item {
+    margin-bottom: 20px;
+}
+
+@media(max-width:700px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<strong>🚨 Emergency Assistance</strong>
+
+<div>
+<a href="{{ url_for('home') }}">Home</a>
+<a href="{{ url_for('dashboard') }}">My Reports</a>
+</div>
+
+</nav>
+
+
+<div class="container">
+
+<div class="card success">
+
+<h1>✅ Emergency Reported</h1>
+
+<p>
+Your emergency has been successfully registered.
+</p>
+
+<p>
+<strong>Emergency ID:</strong>
+#{{ emergency.id }}
+</p>
+
+<p>
+<strong>Current Status:</strong>
+
+<span class="status">
+{{ emergency.status }}
+</span>
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>🚨 Emergency Details</h2>
+
+<div class="grid">
+
+<div class="info">
+
+<div class="label">Emergency Type</div>
+
+<div class="value">
+{{ emergency.emergency_type }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">Severity</div>
+
+<div class="value">
+{{ emergency.severity }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">Reporter</div>
+
+<div class="value">
+{{ emergency.name or emergency.reporter_name }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">Reporter Phone</div>
+
+<div class="value">
+{{ emergency.phone or "Not provided" }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">Address</div>
+
+<div class="value">
+{{ emergency.address or emergency.location or "Location unavailable" }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">Reported At</div>
+
+<div class="value">
+{{ emergency.created_at }}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+{% if emergency.responder_id %}
+
+<div class="card assigned">
+
+<h2>🚑 Responder Assigned</h2>
+
+<p>
+Your emergency has been automatically assigned to a suitable responder.
+</p>
+
+<div class="grid">
+
+<div class="info">
+
+<div class="label">Responder Name</div>
+
+<div class="value">
+{{ emergency.responder_name }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">Department</div>
+
+<div class="value">
+{{ emergency.responder_department }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">Responder Phone</div>
+
+<div class="value">
+{{ emergency.responder_phone }}
+</div>
+
+</div>
+
+
+<div class="info">
+
+<div class="label">Responder Status</div>
+
+<div class="value">
+{{ emergency.status }}
+</div>
+
+</div>
+
+</div>
+
+
+{% if emergency.responder_phone %}
+
+<div class="contact-buttons">
+
+<a class="btn call"
+   href="tel:{{ emergency.responder_phone }}">
+📞 Call Responder
+</a>
+
+{% endif %}
+
+
+{% if emergency.latitude and emergency.longitude %}
+
+<a class="btn map"
+   target="_blank"
+   href="https://www.google.com/maps/dir/?api=1&destination={{ emergency.latitude }},{{ emergency.longitude }}">
+📍 Open Emergency Location
+</a>
+
+{% endif %}
+
+</div>
+
+</div>
+
+{% else %}
+
+<div class="card">
+
+<h2>⏳ Responder Assignment</h2>
+
+<p>
+No suitable available responder has been found yet.
+The emergency is still active and can be assigned by the admin.
+</p>
+
+</div>
+
+{% endif %}
+
+
+<div class="card">
+
+<h2>📝 Description</h2>
+
+<p>
+{{ emergency.description or "No description provided." }}
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>📍 Location</h2>
+
+<p>
+{{ emergency.location or "Location unavailable" }}
+</p>
+
+{% if emergency.latitude and emergency.longitude %}
+
+<a class="btn map"
+   target="_blank"
+   href="https://www.google.com/maps/search/?api=1&query={{ emergency.latitude }},{{ emergency.longitude }}">
+View on Google Maps
+</a>
+
+{% endif %}
+
+</div>
+
+
+<div class="card">
+
+<h2>📋 Emergency History</h2>
+
+<div class="timeline">
+
+{% for item in history %}
+
+<div class="history-item">
+
+<strong>
+{{ item.new_status }}
+</strong>
+
+<br>
+
+<small>
+{{ item.changed_at }}
+</small>
+
+{% if item.note %}
+
+<p>
+{{ item.note }}
+</p>
+
+{% endif %}
+
+</div>
+
+{% else %}
+
+<p>No history available.</p>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<a class="btn back"
+   href="{{ url_for('dashboard') }}">
+← Back to My Reports
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Responders | Emergency Assistance</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 16px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 13px;
+            border-radius: 8px;
+            background: #1f2937;
+        }
+
+        .nav-links a:hover {
+            background: #374151;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header p {
+            margin: 7px 0 0;
+            color: #6b7280;
+        }
+
+        .add-btn {
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #b91c1c;
+        }
+
+        .flash {
+            padding: 13px 16px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+            text-align: left;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: #f9fafb;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .available {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .busy {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .offline {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .action-btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 7px 11px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .edit-btn {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .edit-btn:hover {
+            background: #bfdbfe;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #fecaca;
+        }
+
+        .empty {
+            padding: 50px 20px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .location {
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 14px 16px;
+            }
+
+            .container {
+                margin-top: 20px;
+                padding: 0 12px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="brand">
+        🚑 Emergency Assistance
+    </div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('admin') }}">Admin</a>
+        <a href="{{ url_for('stations') }}">Stations</a>
+        <a href="{{ url_for('responders') }}">Responders</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="header">
+        <div>
+            <h1>🚑 Responders</h1>
+            <p>Manage emergency response team members.</p>
+        </div>
+
+        <a href="{{ url_for('add_responder') }}" class="add-btn">
+            + Add Responder
+        </a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="table-card">
+
+        {% if responders %}
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Responder</th>
+                        <th>Department</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Login Username</th>
+                        <th>Live Location</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for responder in responders %}
+
+                    <tr>
+
+                        <td>
+                            #{{ responder["id"] }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ responder["name"] }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ responder["department"] }}
+                        </td>
+
+                        <td>
+                            📞 {{ responder["phone"] }}
+                        </td>
+
+                        <td>
+
+                            {% set status = responder["status"]|lower %}
+
+                            {% if status == "available" %}
+
+                                <span class="status available">
+                                    Available
+                                </span>
+
+                            {% elif status == "busy" %}
+
+                                <span class="status busy">
+                                    Busy
+                                </span>
+
+                            {% else %}
+
+                                <span class="status offline">
+                                    {{ responder["status"] }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ responder["login_username"] or "-" }}
+                        </td>
+
+                        <td>
+
+                            {% if responder["latitude"] is not none
+                                  and responder["longitude"] is not none %}
+
+                                <div class="location">
+                                    📍 {{ "%.5f"|format(responder["latitude"]) }}<br>
+                                    {{ "%.5f"|format(responder["longitude"]) }}
+                                </div>
+
+                            {% else %}
+
+                                <span class="location">
+                                    Location not available
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <a
+                                href="{{ url_for('edit_responder', responder_id=responder['id']) }}"
+                                class="action-btn edit-btn">
+                                Edit
+                            </a>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('delete_responder', responder_id=responder['id']) }}"
+                                style="display:inline;">
+
+                                <button
+                                    type="submit"
+                                    class="action-btn delete-btn"
+                                    onclick="return confirm('Delete this responder?');">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+            <div class="empty">
+
+                <div style="font-size:50px;">
+                    🚑
+                </div>
+
+                <h2>No responders found</h2>
+
+                <p>Add your first emergency responder.</p>
+
+                <a href="{{ url_for('add_responder') }}"
+                   class="add-btn">
+                    + Add Responder
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

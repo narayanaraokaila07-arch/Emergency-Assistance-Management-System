@@ -1,0 +1,2333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Panel | Emergency Assistance</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f4f7fb;
+
+            color:
+                #172033;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =================================================
+           NAVBAR
+        ================================================= */
+
+        .navbar {
+            background:
+                linear-gradient(
+                    135deg,
+                    #07111f,
+                    #111d33
+                );
+
+            color: white;
+
+            padding:
+                18px 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            box-shadow:
+                0 4px 18px
+                rgba(0,0,0,0.15);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 22px;
+
+            font-weight: 800;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .brand-icon {
+            font-size: 27px;
+        }
+
+        .nav-right {
+            display: flex;
+
+            gap: 10px;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding:
+                10px 15px;
+
+            border-radius:
+                9px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+        .nav-btn:hover {
+            background:
+                rgba(255,255,255,0.18);
+        }
+
+        .logout {
+            background:
+                #ef4444;
+        }
+
+        .logout:hover {
+            background:
+                #dc2626;
+        }
+
+        /* =================================================
+           MAIN
+        ================================================= */
+
+        .container {
+            width:
+                min(1400px, 94%);
+
+            margin:
+                30px auto 60px;
+        }
+
+        .page-header {
+            margin-bottom:
+                25px;
+        }
+
+        .page-header h1 {
+            font-size:
+                32px;
+
+            margin-bottom:
+                7px;
+        }
+
+        .page-header p {
+            color:
+                #64748b;
+
+            font-size:
+                15px;
+        }
+
+        /* =================================================
+           STATISTICS
+        ================================================= */
+
+        .stats {
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap:
+                18px;
+
+            margin-bottom:
+                28px;
+        }
+
+        .stat-card {
+            background:
+                white;
+
+            border-radius:
+                16px;
+
+            padding:
+                22px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15,23,42,0.07);
+
+            border:
+                1px solid #e5eaf1;
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+        }
+
+        .stat-card::after {
+            content: "";
+
+            position:
+                absolute;
+
+            right:
+                -25px;
+
+            bottom:
+                -35px;
+
+            width:
+                90px;
+
+            height:
+                90px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(59,130,246,0.08);
+        }
+
+        .stat-icon {
+            font-size:
+                27px;
+
+            margin-bottom:
+                10px;
+        }
+
+        .stat-number {
+            font-size:
+                30px;
+
+            font-weight:
+                800;
+
+            margin-bottom:
+                4px;
+        }
+
+        .stat-label {
+            color:
+                #64748b;
+
+            font-size:
+                14px;
+
+            font-weight:
+                600;
+        }
+
+        .red .stat-number {
+            color:
+                #dc2626;
+        }
+
+        .orange .stat-number {
+            color:
+                #ea580c;
+        }
+
+        .blue .stat-number {
+            color:
+                #2563eb;
+        }
+
+        .green .stat-number {
+            color:
+                #16a34a;
+        }
+
+        .purple .stat-number {
+            color:
+                #7c3aed;
+        }
+
+        /* =================================================
+           ACTIONS
+        ================================================= */
+
+        .actions {
+            display:
+                flex;
+
+            gap:
+                12px;
+
+            flex-wrap:
+                wrap;
+
+            margin-bottom:
+                28px;
+        }
+
+        .action-btn {
+            border:
+                none;
+
+            cursor:
+                pointer;
+
+            padding:
+                13px 18px;
+
+            border-radius:
+                10px;
+
+            font-weight:
+                700;
+
+            font-size:
+                14px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            transition:
+                0.2s;
+        }
+
+        .primary {
+            background:
+                #2563eb;
+
+            color:
+                white;
+        }
+
+        .primary:hover {
+            background:
+                #1d4ed8;
+        }
+
+        .green-btn {
+            background:
+                #16a34a;
+
+            color:
+                white;
+        }
+
+        .green-btn:hover {
+            background:
+                #15803d;
+        }
+
+        .purple-btn {
+            background:
+                #7c3aed;
+
+            color:
+                white;
+        }
+
+        .purple-btn:hover {
+            background:
+                #6d28d9;
+        }
+
+        .danger-btn {
+            background:
+                #dc2626;
+
+            color:
+                white;
+        }
+
+        .danger-btn:hover {
+            background:
+                #b91c1c;
+        }
+
+        /* =================================================
+           SECTION
+        ================================================= */
+
+        .section {
+            background:
+                white;
+
+            border:
+                1px solid #e5eaf1;
+
+            border-radius:
+                18px;
+
+            padding:
+                22px;
+
+            margin-bottom:
+                28px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15,23,42,0.06);
+        }
+
+        .section-header {
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            margin-bottom:
+                18px;
+
+            flex-wrap:
+                wrap;
+        }
+
+        .section-title {
+            font-size:
+                20px;
+
+            font-weight:
+                800;
+        }
+
+        .section-subtitle {
+            color:
+                #64748b;
+
+            font-size:
+                13px;
+
+            margin-top:
+                4px;
+        }
+
+        /* =================================================
+           TABLE
+        ================================================= */
+
+        .table-wrapper {
+            overflow-x:
+                auto;
+        }
+
+        table {
+            width:
+                100%;
+
+            border-collapse:
+                collapse;
+
+            min-width:
+                1000px;
+        }
+
+        th {
+            background:
+                #f1f5f9;
+
+            color:
+                #334155;
+
+            font-size:
+                12px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                0.5px;
+
+            padding:
+                13px 12px;
+
+            text-align:
+                left;
+
+            border-bottom:
+                1px solid #e2e8f0;
+        }
+
+        td {
+            padding:
+                14px 12px;
+
+            border-bottom:
+                1px solid #edf0f4;
+
+            font-size:
+                14px;
+
+            vertical-align:
+                middle;
+        }
+
+        tr:hover td {
+            background:
+                #f8fafc;
+        }
+
+        .id {
+            font-weight:
+                800;
+
+            color:
+                #2563eb;
+        }
+
+        .type {
+            font-weight:
+                700;
+        }
+
+        .description {
+            max-width:
+                260px;
+
+            color:
+                #64748b;
+
+            line-height:
+                1.4;
+        }
+
+        /* =================================================
+           BADGES
+        ================================================= */
+
+        .badge {
+            display:
+                inline-block;
+
+            padding:
+                6px 10px;
+
+            border-radius:
+                999px;
+
+            font-size:
+                12px;
+
+            font-weight:
+                800;
+
+            white-space:
+                nowrap;
+        }
+
+        .status-reported {
+            background:
+                #fff7ed;
+
+            color:
+                #c2410c;
+        }
+
+        .status-assigned {
+            background:
+                #eff6ff;
+
+            color:
+                #1d4ed8;
+        }
+
+        .status-accepted {
+            background:
+                #f5f3ff;
+
+            color:
+                #6d28d9;
+        }
+
+        .status-progress {
+            background:
+                #fef3c7;
+
+            color:
+                #92400e;
+        }
+
+        .status-completed,
+        .status-resolved {
+            background:
+                #dcfce7;
+
+            color:
+                #166534;
+        }
+
+        .status-cancelled {
+            background:
+                #fee2e2;
+
+            color:
+                #991b1b;
+        }
+
+        .severity-critical {
+            background:
+                #fee2e2;
+
+            color:
+                #b91c1c;
+        }
+
+        .severity-high {
+            background:
+                #ffedd5;
+
+            color:
+                #c2410c;
+        }
+
+        .severity-medium {
+            background:
+                #fef3c7;
+
+            color:
+                #92400e;
+        }
+
+        .severity-low {
+            background:
+                #dcfce7;
+
+            color:
+                #166534;
+        }
+
+        /* =================================================
+           ASSIGN FORM
+        ================================================= */
+
+        .assign-form {
+            display:
+                flex;
+
+            gap:
+                6px;
+
+            align-items:
+                center;
+        }
+
+        .assign-form select {
+            min-width:
+                150px;
+
+            padding:
+                8px 9px;
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius:
+                7px;
+
+            background:
+                white;
+
+            font-size:
+                12px;
+        }
+
+        .small-btn {
+            border:
+                none;
+
+            padding:
+                8px 10px;
+
+            border-radius:
+                7px;
+
+            cursor:
+                pointer;
+
+            background:
+                #2563eb;
+
+            color:
+                white;
+
+            font-weight:
+                700;
+
+            font-size:
+                12px;
+        }
+
+        /* =================================================
+           VIEW BUTTON
+        ================================================= */
+
+        .view-btn {
+            display:
+                inline-block;
+
+            padding:
+                8px 12px;
+
+            border-radius:
+                8px;
+
+            background:
+                #0f172a;
+
+            color:
+                white;
+
+            font-size:
+                12px;
+
+            font-weight:
+                700;
+        }
+
+        .view-btn:hover {
+            background:
+                #1e293b;
+        }
+
+        /* =================================================
+           RESPONDER GRID
+        ================================================= */
+
+        .responder-grid {
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                18px;
+        }
+
+        .responder-card {
+            border:
+                1px solid #e2e8f0;
+
+            border-radius:
+                14px;
+
+            padding:
+                18px;
+
+            background:
+                #f8fafc;
+        }
+
+        .responder-top {
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            margin-bottom:
+                12px;
+        }
+
+        .responder-name {
+            font-size:
+                17px;
+
+            font-weight:
+                800;
+        }
+
+        .responder-info {
+            display:
+                grid;
+
+            gap:
+                8px;
+
+            font-size:
+                13px;
+
+            color:
+                #475569;
+        }
+
+        .responder-info strong {
+            color:
+                #172033;
+        }
+
+        .responder-actions {
+            margin-top:
+                15px;
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+            flex-wrap:
+                wrap;
+        }
+
+        .available {
+            background:
+                #dcfce7;
+
+            color:
+                #166534;
+        }
+
+        .busy {
+            background:
+                #fee2e2;
+
+            color:
+                #991b1b;
+        }
+
+        /* =================================================
+           EMPTY
+        ================================================= */
+
+        .empty {
+            padding:
+                45px 20px;
+
+            text-align:
+                center;
+
+            color:
+                #64748b;
+        }
+
+        .empty-icon {
+            font-size:
+                45px;
+
+            margin-bottom:
+                12px;
+        }
+
+        .empty h3 {
+            color:
+                #334155;
+
+            margin-bottom:
+                5px;
+        }
+
+        /* =================================================
+           FLASH
+        ================================================= */
+
+        .flash-container {
+            margin-bottom:
+                20px;
+        }
+
+        .flash {
+            padding:
+                14px 18px;
+
+            border-radius:
+                10px;
+
+            margin-bottom:
+                10px;
+
+            font-weight:
+                700;
+        }
+
+        .flash-success {
+            background:
+                #dcfce7;
+
+            color:
+                #166534;
+
+            border:
+                1px solid #86efac;
+        }
+
+        .flash-error {
+            background:
+                #fee2e2;
+
+            color:
+                #991b1b;
+
+            border:
+                1px solid #fca5a5;
+        }
+
+        /* =================================================
+           MODAL
+        ================================================= */
+
+        .modal-overlay {
+            display:
+                none;
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            background:
+                rgba(15,23,42,0.65);
+
+            z-index:
+                1000;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                20px;
+        }
+
+        .modal-overlay.show {
+            display:
+                flex;
+        }
+
+        .modal {
+            background:
+                white;
+
+            width:
+                min(500px, 100%);
+
+            border-radius:
+                18px;
+
+            padding:
+                25px;
+
+            box-shadow:
+                0 25px 60px
+                rgba(0,0,0,0.25);
+        }
+
+        .modal h2 {
+            margin-bottom:
+                10px;
+        }
+
+        .modal p {
+            color:
+                #64748b;
+
+            line-height:
+                1.5;
+
+            margin-bottom:
+                20px;
+        }
+
+        .modal-buttons {
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            justify-content:
+                flex-end;
+        }
+
+        .modal-btn {
+            border:
+                none;
+
+            padding:
+                11px 17px;
+
+            border-radius:
+                9px;
+
+            cursor:
+                pointer;
+
+            font-weight:
+                700;
+        }
+
+        .cancel-btn {
+            background:
+                #e2e8f0;
+
+            color:
+                #334155;
+        }
+
+        .confirm-delete {
+            background:
+                #dc2626;
+
+            color:
+                white;
+        }
+
+        /* =================================================
+           FOOTER
+        ================================================= */
+
+        footer {
+            text-align:
+                center;
+
+            color:
+                #64748b;
+
+            padding:
+                25px;
+
+            font-size:
+                13px;
+        }
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (
+            max-width: 1100px
+        ) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .responder-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (
+            max-width: 700px
+        ) {
+
+            .navbar {
+                padding:
+                    15px 18px;
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+                gap:
+                    15px;
+            }
+
+            .container {
+                width:
+                    94%;
+            }
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .responder-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .page-header h1 {
+                font-size:
+                    26px;
+            }
+
+        }
+
+        @media (
+            max-width: 450px
+        ) {
+
+            .stats {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .actions {
+                flex-direction:
+                    column;
+            }
+
+            .action-btn {
+                width:
+                    100%;
+
+                justify-content:
+                    center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     NAVBAR
+======================================================= -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-icon">
+            🛡️
+        </span>
+
+        Emergency Assistance
+        — Admin Panel
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <a
+            href="{{ url_for('home') }}"
+            class="nav-btn"
+        >
+            🏠 Home
+        </a>
+
+        <a
+            href="{{ url_for('responders') }}"
+            class="nav-btn"
+        >
+            🚑 Responders
+        </a>
+
+        <a
+            href="{{ url_for('stations') }}"
+            class="nav-btn"
+        >
+            🏥 Stations
+        </a>
+
+        <a
+            href="{{ url_for('analytics') }}"
+            class="nav-btn"
+        >
+            📊 Analytics
+        </a>
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="nav-btn logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ======================================================
+     MAIN
+======================================================= -->
+
+<main class="container">
+
+
+    <div class="page-header">
+
+        <h1>
+            Emergency Management Dashboard
+        </h1>
+
+        <p>
+            Monitor emergency reports, responders,
+            assignments and current emergency status.
+        </p>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         FLASH MESSAGES
+    =================================================== -->
+
+    {% with messages = get_flashed_messages(
+        with_categories=true
+    ) %}
+
+        {% if messages %}
+
+            <div class="flash-container">
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="flash
+                        {% if category == 'success' %}
+                            flash-success
+                        {% else %}
+                            flash-error
+                        {% endif %}"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <!-- ==================================================
+         STATISTICS
+    =================================================== -->
+
+    <section class="stats">
+
+
+        <div class="stat-card blue">
+
+            <div class="stat-icon">
+                🚨
+            </div>
+
+            <div class="stat-number">
+                {{ total }}
+            </div>
+
+            <div class="stat-label">
+                Total Emergencies
+            </div>
+
+        </div>
+
+
+        <div class="stat-card orange">
+
+            <div class="stat-icon">
+                🕐
+            </div>
+
+            <div class="stat-number">
+                {{ reported }}
+            </div>
+
+            <div class="stat-label">
+                Reported
+            </div>
+
+        </div>
+
+
+        <div class="stat-card purple">
+
+            <div class="stat-icon">
+                🚑
+            </div>
+
+            <div class="stat-number">
+                {{ assigned }}
+            </div>
+
+            <div class="stat-label">
+                Assigned
+            </div>
+
+        </div>
+
+
+        <div class="stat-card red">
+
+            <div class="stat-icon">
+                🔴
+            </div>
+
+            <div class="stat-number">
+                {{ critical }}
+            </div>
+
+            <div class="stat-label">
+                Critical
+            </div>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+            <div class="stat-number">
+                {{ resolved }}
+            </div>
+
+            <div class="stat-label">
+                Resolved
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==================================================
+         ACTION BUTTONS
+    =================================================== -->
+
+    <div class="actions">
+
+
+        <a
+            href="{{ url_for('add_responder') }}"
+            class="action-btn green-btn"
+        >
+            ➕ Add Responder
+        </a>
+
+
+        <a
+            href="{{ url_for('responders') }}"
+            class="action-btn primary"
+        >
+            🚑 Manage Responders
+        </a>
+
+
+        <a
+            href="{{ url_for('stations') }}"
+            class="action-btn purple-btn"
+        >
+            🏥 Manage Stations
+        </a>
+
+
+        <a
+            href="{{ url_for('analytics') }}"
+            class="action-btn primary"
+        >
+            📊 View Analytics
+        </a>
+
+
+        <button
+            type="button"
+            class="action-btn danger-btn"
+            onclick="openClearModal()"
+        >
+            🗑️ Clear All Emergency Reports
+        </button>
+
+
+    </div>
+
+
+
+    <!-- ==================================================
+         EMERGENCY REPORTS
+    =================================================== -->
+
+    <section class="section">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-title">
+                    🚨 Emergency Reports
+                </div>
+
+                <div class="section-subtitle">
+                    All emergency reports received by the system.
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        {% if emergencies %}
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Reporter
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Severity
+                            </th>
+
+                            <th>
+                                Location
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Responder
+                            </th>
+
+                            <th>
+                                Assign
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for emergency in emergencies %}
+
+                            <tr>
+
+
+                                <!-- ID -->
+
+                                <td class="id">
+
+                                    #{{ emergency["id"] }}
+
+                                </td>
+
+
+
+                                <!-- REPORTER -->
+
+                                <td>
+
+                                    <strong>
+                                        {{
+                                            emergency["reporter_name"]
+                                            or
+                                            emergency["name"]
+                                            or
+                                            "Unknown"
+                                        }}
+                                    </strong>
+
+                                    {% if emergency["phone"] %}
+
+                                        <br>
+
+                                        <small
+                                            style="color:#64748b;"
+                                        >
+                                            {{ emergency["phone"] }}
+                                        </small>
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- TYPE -->
+
+                                <td class="type">
+
+                                    {{ emergency["emergency_type"] }}
+
+                                </td>
+
+
+
+                                <!-- SEVERITY -->
+
+                                <td>
+
+                                    {% set severity =
+                                        (emergency["severity"] or "")
+                                        |lower
+                                    %}
+
+
+                                    <span
+                                        class="badge
+                                        {% if severity == 'critical' %}
+                                            severity-critical
+                                        {% elif severity == 'high' %}
+                                            severity-high
+                                        {% elif severity == 'medium' %}
+                                            severity-medium
+                                        {% else %}
+                                            severity-low
+                                        {% endif %}"
+                                    >
+
+                                        {{
+                                            emergency["severity"]
+                                            or
+                                            "Normal"
+                                        }}
+
+                                    </span>
+
+                                </td>
+
+
+
+                                <!-- LOCATION -->
+
+                                <td>
+
+                                    <div
+                                        style="
+                                        max-width:180px;
+                                        line-height:1.4;
+                                        "
+                                    >
+
+                                        {{
+                                            emergency["address"]
+                                            or
+                                            emergency["location"]
+                                            or
+                                            "Location unavailable"
+                                        }}
+
+                                    </div>
+
+                                </td>
+
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    {% set status =
+                                        (emergency["status"] or "")
+                                        |lower
+                                    %}
+
+
+                                    <span
+                                        class="badge
+                                        {% if status == 'reported' %}
+                                            status-reported
+                                        {% elif status == 'assigned' %}
+                                            status-assigned
+                                        {% elif status == 'accepted' %}
+                                            status-accepted
+                                        {% elif status in ['in progress', 'on the way', 'reached'] %}
+                                            status-progress
+                                        {% elif status in ['completed', 'resolved'] %}
+                                            status-completed
+                                        {% elif status == 'cancelled' %}
+                                            status-cancelled
+                                        {% endif %}"
+                                    >
+
+                                        {{
+                                            emergency["status"]
+                                            or
+                                            "Reported"
+                                        }}
+
+                                    </span>
+
+                                </td>
+
+
+
+                                <!-- RESPONDER -->
+
+                                <td>
+
+                                    {% if emergency["responder_name"] %}
+
+                                        <strong>
+                                            {{
+                                                emergency["responder_name"]
+                                            }}
+                                        </strong>
+
+                                        <br>
+
+                                        <small
+                                            style="color:#64748b;"
+                                        >
+                                            {{
+                                                emergency["responder_department"]
+                                                or
+                                                emergency["responder"]
+                                                or
+                                                ""
+                                            }}
+                                        </small>
+
+                                        {% if emergency["responder_phone"] %}
+
+                                            <br>
+
+                                            <small
+                                                style="color:#64748b;"
+                                            >
+                                                📞
+                                                {{
+                                                    emergency["responder_phone"]
+                                                }}
+                                            </small>
+
+                                        {% endif %}
+
+                                    {% elif emergency["responder"] %}
+
+                                        <strong>
+                                            {{ emergency["responder"] }}
+                                        </strong>
+
+                                    {% else %}
+
+                                        <span
+                                            style="
+                                            color:#dc2626;
+                                            font-weight:700;
+                                            "
+                                        >
+                                            Not Assigned
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+
+                                <!-- ASSIGN -->
+
+                                <td>
+
+                                    <form
+                                        method="POST"
+                                        action="{{
+                                            url_for(
+                                                'assign',
+                                                emergency_id=emergency['id']
+                                            )
+                                        }}"
+                                        class="assign-form"
+                                    >
+
+                                        <select
+                                            name="responder_id"
+                                            required
+                                        >
+
+                                            <option value="">
+                                                Select
+                                            </option>
+
+                                            {% for responder in responders %}
+
+                                                <option
+                                                    value="{{
+                                                        responder['id']
+                                                    }}"
+                                                >
+
+                                                    {{
+                                                        responder["name"]
+                                                    }}
+
+                                                    —
+                                                    {{
+                                                        responder["department"]
+                                                    }}
+
+                                                </option>
+
+                                            {% endfor %}
+
+                                        </select>
+
+
+                                        <button
+                                            type="submit"
+                                            class="small-btn"
+                                        >
+                                            Assign
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+
+
+                                <!-- DATE -->
+
+                                <td>
+
+                                    <small>
+                                        {{
+                                            emergency["created_at"]
+                                            or
+                                            "-"
+                                        }}
+                                    </small>
+
+                                </td>
+
+
+
+                                <!-- ACTION -->
+
+                                <td>
+
+                                    <a
+                                        href="{{
+                                            url_for(
+                                                'emergency_details',
+                                                emergency_id=emergency['id']
+                                            )
+                                        }}"
+                                        class="view-btn"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    No Emergency Reports
+                </h3>
+
+                <p>
+                    There are currently no emergency reports
+                    in the system.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+
+    <!-- ==================================================
+         RESPONDERS
+    =================================================== -->
+
+    <section class="section">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-title">
+                    🚑 Responder Team
+                </div>
+
+                <div class="section-subtitle">
+                    Current responder availability and details.
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('responders') }}"
+                class="action-btn primary"
+            >
+                View All
+            </a>
+
+        </div>
+
+
+
+        {% if responders %}
+
+
+            <div class="responder-grid">
+
+
+                {% for responder in responders[:6] %}
+
+
+                    <div class="responder-card">
+
+
+                        <div class="responder-top">
+
+                            <div class="responder-name">
+
+                                {{ responder["name"] }}
+
+                            </div>
+
+
+                            {% set rstatus =
+                                (responder["status"] or "Available")
+                                |lower
+                            %}
+
+
+                            <span
+                                class="badge
+                                {% if rstatus == 'available' %}
+                                    available
+                                {% else %}
+                                    busy
+                                {% endif %}"
+                            >
+
+                                {{
+                                    responder["status"]
+                                    or
+                                    "Available"
+                                }}
+
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="responder-info">
+
+                            <div>
+
+                                🏢
+                                <strong>
+                                    Department:
+                                </strong>
+
+                                {{
+                                    responder["department"]
+                                    or
+                                    "-"
+                                }}
+
+                            </div>
+
+
+                            <div>
+
+                                📞
+                                <strong>
+                                    Phone:
+                                </strong>
+
+                                {{
+                                    responder["phone"]
+                                    or
+                                    "-"
+                                }}
+
+                            </div>
+
+
+                            <div>
+
+                                👤
+                                <strong>
+                                    Username:
+                                </strong>
+
+                                {{
+                                    responder["login_username"]
+                                    or
+                                    "Not configured"
+                                }}
+
+                            </div>
+
+
+                            <div>
+
+                                📍
+                                <strong>
+                                    Location:
+                                </strong>
+
+                                {% if responder["latitude"] and responder["longitude"] %}
+
+                                    GPS available
+
+                                {% else %}
+
+                                    GPS not set
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🚑
+                </div>
+
+                <h3>
+                    No Responders
+                </h3>
+
+                <p>
+                    Add responders to enable automatic assignment.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+
+    <!-- ==================================================
+         STATIONS
+    =================================================== -->
+
+    <section class="section">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-title">
+                    🏥 Emergency Stations
+                </div>
+
+                <div class="section-subtitle">
+                    Police, fire and medical response stations.
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('stations') }}"
+                class="action-btn purple-btn"
+            >
+                Manage Stations
+            </a>
+
+        </div>
+
+
+        {% if stations %}
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Address
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for station in stations %}
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        {{ station["name"] }}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    {{ station["type"] }}
+                                </td>
+
+                                <td>
+                                    {{ station["phone"] or "-" }}
+                                </td>
+
+                                <td>
+                                    {{ station["address"] or "-" }}
+                                </td>
+
+                                <td>
+
+                                    <span
+                                        class="badge
+                                        {% if station['status'] == 'Active' %}
+                                            available
+                                        {% else %}
+                                            busy
+                                        {% endif %}"
+                                    >
+
+                                        {{
+                                            station["status"]
+                                            or
+                                            "Active"
+                                        }}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🏥
+                </div>
+
+                <h3>
+                    No Stations Added
+                </h3>
+
+                <p>
+                    Add emergency stations from the Stations page.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ======================================================
+     CLEAR ALL MODAL
+======================================================= -->
+
+<div
+    class="modal-overlay"
+    id="clearModal"
+>
+
+    <div class="modal">
+
+        <h2>
+            ⚠️ Clear All Emergency Reports?
+        </h2>
+
+        <p>
+
+            This will permanently delete all emergency
+            reports and their history.
+
+            <br><br>
+
+            Responders assigned to those reports will be
+            returned to <strong>Available</strong> status.
+
+        </p>
+
+
+        <div class="modal-buttons">
+
+
+            <button
+                type="button"
+                class="modal-btn cancel-btn"
+                onclick="closeClearModal()"
+            >
+                Cancel
+            </button>
+
+
+            <form
+                method="POST"
+                action="{{
+                    url_for(
+                        'clear_all_emergencies'
+                    )
+                }}"
+            >
+
+                <button
+                    type="submit"
+                    class="modal-btn confirm-delete"
+                >
+                    Yes, Clear Everything
+                </button>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    Emergency Assistance Management System
+
+    <br>
+
+    Admin Control Panel
+
+</footer>
+
+
+
+<script>
+
+    function openClearModal() {
+
+        document
+            .getElementById("clearModal")
+            .classList
+            .add("show");
+
+    }
+
+
+    function closeClearModal() {
+
+        document
+            .getElementById("clearModal")
+            .classList
+            .remove("show");
+
+    }
+
+
+    document
+        .getElementById("clearModal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === this
+                ) {
+
+                    closeClearModal();
+
+                }
+
+            }
+        );
+
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeClearModal();
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
