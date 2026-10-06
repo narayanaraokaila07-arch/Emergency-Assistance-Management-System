@@ -1640,230 +1640,494 @@ def report():
 # QUICK SOS
 # ============================================================
 
-@app.route(
-    "/sos",
-    methods=["POST"]
-)
+# ============================================================
+# QUICK SOS
+# ============================================================
+
+@app.route("/sos", methods=["POST"])
 def sos():
 
-    emergency_type = request.form.get(
-        "emergency_type",
-        "Other"
-    ).strip()
+    try:
+        # ----------------------------------------------------
+        # GET EMERGENCY TYPE
+        # ----------------------------------------------------
+
+        emergency_type = request.form.get(
+            "emergency_type",
+            "Other"
+        ).strip()
+
+        allowed_types = [
+            "Accident",
+            "Fire",
+            "Medical",
+            "Police",
+            "Women Safety",
+            "Other"
+        ]
+
+        if emergency_type not in allowed_types:
+            emergency_type = "Other"
 
 
-    allowed_types = [
+        # ----------------------------------------------------
+        # GET GPS LOCATION
+        # ----------------------------------------------------
 
-        "Accident",
+        latitude = request.form.get(
+            "latitude",
+            ""
+        ).strip()
 
-        "Fire",
-
-        "Medical",
-
-        "Police",
-
-        "Women Safety",
-
-        "Other"
-    ]
-
-
-    if emergency_type not in allowed_types:
-
-        emergency_type = "Other"
+        longitude = request.form.get(
+            "longitude",
+            ""
+        ).strip()
 
 
-    latitude = request.form.get(
-        "latitude",
-        ""
-    ).strip()
+        # Convert GPS values safely
+        try:
+
+            latitude_value = (
+                float(latitude)
+                if latitude
+                else None
+            )
+
+            longitude_value = (
+                float(longitude)
+                if longitude
+                else None
+            )
+
+        except (TypeError, ValueError):
+
+            latitude_value = None
+            longitude_value = None
 
 
-    longitude = request.form.get(
-        "longitude",
-        ""
-    ).strip()
+        # ----------------------------------------------------
+        # LOCATION TEXT
+        # ----------------------------------------------------
+
+        if (
+            latitude_value is not None
+            and
+            longitude_value is not None
+        ):
+
+            location = (
+                f"{latitude_value:.6f}, "
+                f"{longitude_value:.6f}"
+            )
+
+        else:
+
+            location = "Location unavailable"
 
 
-    if latitude and longitude:
+        # ----------------------------------------------------
+        # SEVERITY
+        # ----------------------------------------------------
 
-        location = (
-            f"{latitude}, {longitude}"
+        if emergency_type in [
+            "Accident",
+            "Fire",
+            "Medical",
+            "Women Safety"
+        ]:
+
+            severity = "Critical"
+
+        else:
+
+            severity = "High"
+
+
+        # ----------------------------------------------------
+        # DESCRIPTION
+        # ----------------------------------------------------
+
+        if emergency_type == "Women Safety":
+
+            description = (
+                "Women Safety emergency "
+                "reported using SOS. "
+                "Police responders only."
+            )
+
+        else:
+
+            description = (
+                emergency_type
+                + " emergency reported "
+                "using SOS."
+            )
+
+
+        # ----------------------------------------------------
+        # USER
+        # ----------------------------------------------------
+
+        user_id = session.get(
+            "user_id"
         )
 
-    else:
-
-        location = (
-            "Location unavailable"
-        )
-
-
-    if emergency_type in (
-        "Accident",
-        "Fire",
-        "Medical",
-        "Women Safety"
-    ):
-
-        severity = "Critical"
-
-    else:
-
-        severity = "High"
-
-
-    # IMPORTANT:
-    # This fixes the old undefined `description` error.
-
-    if emergency_type == "Women Safety":
-
-        description = (
-            "Women Safety SOS. "
-            "Police responders only."
-        )
-
-    else:
-
-        description = (
-            f"{emergency_type} "
-            "emergency reported using SOS button."
-        )
-
-
-    conn = get_db()
-
-
-    cursor = conn.execute(
-        """
-        INSERT INTO emergencies
-        (
-            name,
-            phone,
-            emergency_type,
-            location,
-            severity,
-            description,
-            status,
-            created_at,
-            reporter_name,
-            address,
-            latitude,
-            longitude,
-            user_id
-        )
-        VALUES
-        (
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            'Reported',
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            ?
-        )
-        """,
-        (
-            "SOS User",
-            "",
-            emergency_type,
-            location,
-            severity,
-            description,
-            now(),
-            "SOS User",
-            location,
-            latitude or None,
-            longitude or None,
-            session.get("user_id")
-        )
-    )
-
-
-    emergency_id = cursor.lastrowid
-
-
-    conn.commit()
-
-    conn.close()
-
-
-    add_history(
-        emergency_id,
-        "",
-        "Reported",
-        "Emergency reported using SOS"
-    )
-
-
-    chosen = dispatch_multiple_responders(
-        emergency_id,
-        emergency_type,
-        latitude,
-        longitude
-    )
-
-
-    responder_list = []
-
-
-    for distance, responder in chosen:
-
-        responder_list.append(
-            {
-                "id": responder["id"],
-                "name": responder["name"],
-                "department": responder["department"],
-                "phone": responder["phone"],
-                "distance_km":
-                    None
-                    if distance >= 10**9
-                    else round(
-                        distance,
-                        2
-                    )
-            }
+        user_name = session.get(
+            "user_name",
+            "SOS User"
         )
 
 
-    return jsonify(
-        {
-            "success": True,
+        # ----------------------------------------------------
+        # INSERT EMERGENCY
+        # ----------------------------------------------------
 
-            "emergency_id":
-                emergency_id,
+        conn = get_db()
 
-            "emergency_type":
+        cursor = conn.execute(
+            """
+            INSERT INTO emergencies
+            (
+                name,
+                phone,
                 emergency_type,
+                location,
+                severity,
+                description,
+                status,
+                created_at,
+                reporter_name,
+                address,
+                latitude,
+                longitude,
+                user_id
+            )
+            VALUES
+            (
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                'Reported',
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?
+            )
+            """,
+            (
+                user_name,
+                "",
+                emergency_type,
+                location,
+                severity,
+                description,
+                now(),
+                user_name,
+                location,
+                latitude_value,
+                longitude_value,
+                user_id
+            )
+        )
 
-            "responders":
-                responder_list,
+        emergency_id = cursor.lastrowid
 
-            "responder":
-                (
-                    responder_list[0]["name"]
-                    if responder_list
-                    else None
-                ),
+        conn.commit()
+        conn.close()
 
-            "message":
-                (
-                    "Women Safety alert sent "
-                    "to police responders."
-                    if emergency_type
-                    == "Women Safety"
-                    else
-                    "Emergency alert sent successfully."
+
+        # ----------------------------------------------------
+        # HISTORY
+        # ----------------------------------------------------
+
+        try:
+
+            add_history(
+                emergency_id,
+                "",
+                "Reported",
+                "Emergency reported using SOS"
+            )
+
+        except Exception:
+
+            # Do not allow history problems
+            # to break the SOS JSON response.
+            pass
+
+
+        # ----------------------------------------------------
+        # AUTOMATIC MULTIPLE RESPONDER DISPATCH
+        # ----------------------------------------------------
+
+        chosen = []
+
+        try:
+
+            chosen = dispatch_multiple_responders(
+                emergency_id,
+                emergency_type,
+                latitude_value,
+                longitude_value
+            )
+
+        except Exception as dispatch_error:
+
+            # Emergency has already been created.
+            # Return a useful JSON response instead
+            # of Flask's HTML error page.
+
+            return jsonify(
+                {
+                    "success": True,
+                    "emergency_id": emergency_id,
+                    "emergency_type": emergency_type,
+                    "status": "Reported",
+                    "responder_name": None,
+                    "responder_department": None,
+                    "responder_phone": None,
+                    "distance_km": None,
+                    "responders": [],
+                    "message": (
+                        "SOS received successfully, "
+                        "but automatic responder "
+                        "assignment could not be completed."
+                    ),
+                    "dispatch_error": str(
+                        dispatch_error
+                    )
+                }
+            ), 200
+
+
+        # ----------------------------------------------------
+        # BUILD RESPONDER LIST
+        # ----------------------------------------------------
+
+        responder_list = []
+
+        for distance, responder in chosen:
+
+            responder_list.append(
+                {
+                    "id": responder["id"],
+
+                    "name": responder["name"],
+
+                    "department":
+                        responder["department"],
+
+                    "phone":
+                        responder["phone"],
+
+                    "distance_km":
+                        (
+                            None
+                            if distance >= 10**9
+                            else round(
+                                distance,
+                                2
+                            )
+                        )
+                }
+            )
+
+
+        # ----------------------------------------------------
+        # PRIMARY RESPONDER
+        # ----------------------------------------------------
+
+        primary = (
+            responder_list[0]
+            if responder_list
+            else None
+        )
+
+
+        # ----------------------------------------------------
+        # STATUS
+        # ----------------------------------------------------
+
+        if primary:
+
+            status = "Assigned"
+
+        else:
+
+            status = "Reported"
+
+
+        # ----------------------------------------------------
+        # MESSAGE
+        # ----------------------------------------------------
+
+        if emergency_type == "Women Safety":
+
+            if primary:
+
+                message = (
+                    "Women Safety SOS sent "
+                    "successfully. Police responder "
+                    "has been assigned."
                 )
-        }
-    )
+
+            else:
+
+                message = (
+                    "Women Safety SOS received, "
+                    "but no available police "
+                    "responder was found."
+                )
+
+        else:
+
+            if primary:
+
+                message = (
+                    "Emergency SOS sent "
+                    "successfully. Responder "
+                    "has been assigned."
+                )
+
+            else:
+
+                message = (
+                    "Emergency SOS sent "
+                    "successfully, but no suitable "
+                    "available responder was found."
+                )
 
 
+        # ----------------------------------------------------
+        # SAVE RECENT SOS IDS
+        # ----------------------------------------------------
+
+        recent_ids = session.get(
+            "sos_report_ids",
+            []
+        )
+
+        cleaned_ids = []
+
+        for item in recent_ids:
+
+            try:
+
+                cleaned_ids.append(
+                    int(item)
+                )
+
+            except (
+                TypeError,
+                ValueError
+            ):
+
+                pass
+
+
+        cleaned_ids.insert(
+            0,
+            int(emergency_id)
+        )
+
+        session["sos_report_ids"] = (
+            cleaned_ids[:20]
+        )
+
+        session.modified = True
+
+
+        # ----------------------------------------------------
+        # FINAL JSON RESPONSE
+        # ----------------------------------------------------
+
+        return jsonify(
+            {
+                "success": True,
+
+                "emergency_id":
+                    emergency_id,
+
+                "emergency_type":
+                    emergency_type,
+
+                "status":
+                    status,
+
+                # Frontend-compatible fields
+                "responder_name":
+                    (
+                        primary["name"]
+                        if primary
+                        else None
+                    ),
+
+                "responder_department":
+                    (
+                        primary["department"]
+                        if primary
+                        else None
+                    ),
+
+                "responder_phone":
+                    (
+                        primary["phone"]
+                        if primary
+                        else None
+                    ),
+
+                "distance_km":
+                    (
+                        primary["distance_km"]
+                        if primary
+                        else None
+                    ),
+
+                # Full responder list
+                "responders":
+                    responder_list,
+
+                # Compatibility
+                "responder":
+                    (
+                        primary["name"]
+                        if primary
+                        else None
+                    ),
+
+                "message":
+                    message
+            }
+        ), 200
+
+
+    # --------------------------------------------------------
+    # GLOBAL SOS ERROR
+    # --------------------------------------------------------
+
+    except Exception as error:
+
+        # IMPORTANT:
+        # Never return an HTML error page for AJAX SOS.
+        # Always return JSON.
+
+        return jsonify(
+            {
+                "success": False,
+
+                "message":
+                    "Could not process SOS request.",
+
+                "error":
+                    str(error)
+            }
+        ), 500
 # ============================================================
 # WOMEN SAFETY
 # ============================================================
