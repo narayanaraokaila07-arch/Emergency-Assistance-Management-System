@@ -46,28 +46,32 @@ else:
     DATABASE = LEGACY_DB
 
 
+# ============================================================
+# UPLOAD / REPORT FOLDERS
+# ============================================================
+
+# Vercel does not allow writing inside /var/task.
+# Therefore, use /tmp when running on Vercel.
+# When running locally, continue using static/uploads and
+# static/reports as before.
+
+if os.environ.get("VERCEL") == "1":
+    RUNTIME_BASE = os.path.join("/tmp", "emergency_system")
+else:
+    RUNTIME_BASE = os.path.join(BASE_DIR, "static")
+
 UPLOAD_FOLDER = os.path.join(
-    BASE_DIR,
-    "static",
+    RUNTIME_BASE,
     "uploads"
 )
 
 REPORT_FOLDER = os.path.join(
-    BASE_DIR,
-    "static",
+    RUNTIME_BASE,
     "reports"
 )
 
-
-os.makedirs(
-    UPLOAD_FOLDER,
-    exist_ok=True
-)
-
-os.makedirs(
-    REPORT_FOLDER,
-    exist_ok=True
-)
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(REPORT_FOLDER, exist_ok=True)
 
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
